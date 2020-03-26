@@ -1,6 +1,7 @@
 import sys
 import inspect
-from EventBus import EventBus
+from src.Menus import HelpMenu
+from src.Events import EventBus
 
 
 class Application:

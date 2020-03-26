@@ -45,5 +45,3 @@ class Container:
     def instance(self, instance):
 
         return
-
-container = Container()
