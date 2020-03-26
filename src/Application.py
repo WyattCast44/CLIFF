@@ -2,6 +2,7 @@ import sys
 import inspect
 from src.Menus import HelpMenu
 from src.Events import EventBus
+from src.Container import Container
 
 
 class Application:
@@ -20,18 +21,20 @@ class Application:
 
     defaultCommand = None
 
-    def __init__(self, config: dict = {}, eventbus: EventBus = None):
+    def __init__(self, config: dict = {}):
 
         # Merge the defaults and user config
         self.config = {**self.defaults, **config}
 
-        # Register the event bus
-        if not eventbus == None:
-            self.eventbus = eventbus
-        else:
-            self.eventbus = EventBus()
+        # Bind the container
+        self.container = Container(self)
 
-        self.eventbus.fire('app:starting')
+        # Register base bindings
+        self.container.bind("Application", self)
+        self.container.bind("EventBus", EventBus())
+        self.container.bind("HelpMenu", HelpMenu)
+
+        self.container.resolve("EventBus").fire('app:starting')
 
         # Grab the name of the script
         self.script = sys.argv[0]
@@ -47,6 +50,10 @@ class Application:
         # application env
 
         return self.config['env']
+
+    def container(self):
+
+        return self.container
 
     def registerOptions(self, options):
 
@@ -66,7 +73,8 @@ class Application:
                 # I'd like users to be able to
                 # override any default options
 
-                self.eventbus.fire('options:register', [option])
+                self.container.resolve("EventBus").fire(
+                    'options:register', [option])
 
                 self.options[option.signature] = option
 
@@ -82,7 +90,8 @@ class Application:
                 # I'd like users to be able to
                 # override any default options
 
-                self.eventbus.fire('options:register', [signature, handler])
+                self.container.resolve("EventBus").fire(
+                    'options:register', [signature, handler])
 
                 self.options[signature] = handler
 
@@ -122,7 +131,8 @@ class Application:
                 # I'd like users to be able to
                 # override any default options
 
-                self.eventbus.fire('commands:register', [signature, handler])
+                self.container.resolve("EventBus").fire(
+                    'commands:register', [signature, handler])
 
                 self.commands[signature] = handler
 
@@ -181,7 +191,7 @@ class Application:
 
     def run(self):
 
-        self.eventbus.fire('app:run')
+        self.container.resolve("EventBus").fire('app:running')
 
         # First thing to do is
         # check if we have a default
@@ -200,10 +210,13 @@ class Application:
 
         if len(self.args) == 0:
 
-            HelpMenu(self, self.config["width"]).render()
+            # HelpMenu(self, self.config["width"]).render()
+
+            menu = self.container.resolve("HelpMenu")(
+                self, self.config["width"]).render()
 
     def __del__(self):
 
-        self.eventbus.fire('app:end')
+        self.container.resolve("EventBus").fire('app:end')
 
         return

@@ -1,4 +1,6 @@
+import os
 import inspect
+from src import Application
 
 
 class Container:
@@ -7,30 +9,23 @@ class Container:
 
     singletons = {}
 
-    def __init__(self):
+    def __init__(self, application: Application):
+
+        self.application = application
+
+        self.bind('cwd', os.getcwd())
+        self.bind('root', os.path.realpath(__file__))
 
         return
 
     def resolve(self, key):
 
-        binding = self.bindings[key]
+        # TODO make this an actual
+        # useful container, and inspect
+        # the constructor to inject
+        # dependencies
 
-        print(binding)
-
-        # Check if is class
-        if inspect.isclass(binding):
-            return binding()
-
-        # Check if is instance
-        if isinstance(binding, binding):
-            return binding
-
-        # Check if is function
-        if callable(binding):
-            return binding()
-
-        # Unknown, just return binding
-        return binding
+        return self.bindings[key]
 
     def bind(self, key, value):
 
@@ -43,5 +38,9 @@ class Container:
         return
 
     def instance(self, instance):
+
+        return
+
+    def __del__(self):
 
         return
