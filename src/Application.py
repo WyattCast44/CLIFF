@@ -200,8 +200,6 @@ class Application:
 
         if len(self.args) == 0:
 
-            from HelpMenu import HelpMenu
-
             HelpMenu(self, self.config["width"]).render()
 
     def __del__(self):
