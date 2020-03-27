@@ -1,6 +1,15 @@
 from src import Application
 
-app = Application({
-    'name': 'NetScan Port Tool',
-    'description': 'Let us see how a really long program description looks in the help menu.',
+
+def functionBasedOption(app):
+    """Show a quick litte help message"""
+
+    print("\nTODO\n")
+
+
+Application({
+    'name': 'Example App',
+    'description': 'This is an example CLI app.',
+}).registerOptions({
+    '--f|--flag': functionBasedOption
 }).run()
