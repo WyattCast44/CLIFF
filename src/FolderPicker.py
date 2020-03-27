@@ -3,13 +3,12 @@ import tkinter as tk
 from tkinter import filedialog
 
 
-class FilePicker:
+class FolderPicker:
 
     # @link https://pythonspot.com/tk-file-dialogs/
 
     defaults = {
-        'title': 'Select Files',
-        'filetypes': [("All Files", "*.*")],
+        'title': 'Select Folder',
         'initialDir': os.getcwd()
     }
 
@@ -30,37 +29,17 @@ class FilePicker:
         return
 
     def setTitle(self, title: str):
-        """Set the title of the filepicker dialog. Default: Select Files"""
+        """Set the title of the filepicker dialog. Default: Select Folder"""
 
         self.defaults["title"] = title
 
         return self
 
-    def setFiletypes(self, types: list):
-        """Set the allowable file types of the filepicker
-
-        You should pass a list of tuples, where the first item is the display name of the
-        file type, and the second item is the file extension. See example below:
-
-        [("jpeg files", "*.jpg", "all files", "*.*")]
-        """
-
-        self.defaults["filetypes"] = types
-
-        return self
-
-    def setInitialDir(self, path: str):
-        """Set the initial directory, defaults to the current working directory"""
-
-        self.defaults["initialDir"] = path
-
-        return self
-
     def prompt(self):
-        """Show the file picker and prompt user to select a file"""
+        """Show the file picker and prompt user to select a folder"""
 
-        self.path = filedialog.askopenfilename(
-            initialdir=self.defaults["initialDir"], title=self.defaults["title"],  filetypes=self.defaults["filetypes"])
+        self.path = filedialog.askdirectory(
+            initialdir=self.defaults["initialDir"], title=self.defaults["title"])
 
         # If the path is an empty string
         # the user cancelled, update cancelled
@@ -88,7 +67,6 @@ class FilePicker:
         self.win.destroy()
 
 
-picker = FilePicker().setTitle('Welp').setFiletypes(
-    [('Config Files', '*.config')]).prompt()
+picker = FolderPicker().setTitle('Welp').prompt()
 
 print(picker.getPath(), picker.wasCancelled())
