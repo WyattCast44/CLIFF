@@ -47,7 +47,7 @@ class FilePicker:
         """Show the file picker and prompt user to select file(s)"""
 
         path = filedialog.askopenfilename(
-            initialdir=self.defaults["initialDir"], title=self.defaults["title"])
+            initialdir=self.defaults["initialDir"], title=self.defaults["title"],  (("jpeg files", "*.jpg"), ("all files", "*.*")))
 
         # If the path is an empty string
         # the user cancelled, update cancelled
