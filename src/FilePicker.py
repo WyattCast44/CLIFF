@@ -9,7 +9,7 @@ class FilePicker:
 
     defaults = {
         'title': 'Select Files',
-        'filetypes': [],
+        'filetypes': [("All Files", "*.*")],
         'initialDir': os.getcwd()
     }
 
@@ -30,14 +30,20 @@ class FilePicker:
         return
 
     def setTitle(self, title: str):
-        """Set the title of the filepicker dialog"""
+        """Set the title of the filepicker dialog. Default: Select Files"""
 
         self.defaults["title"] = title
 
         return self
 
     def setFiletypes(self, types: list):
-        """Set the allowable file types of the filepicker"""
+        """Set the allowable file types of the filepicker
+
+        You should pass a list of tuples, where the first item is the display name of the
+        file type, and the second item is the file extension. See example below:
+
+        [("jpeg files", "*.jpg", "all files", "*.*")]
+        """
 
         self.defaults["filetypes"] = types
 
@@ -47,7 +53,7 @@ class FilePicker:
         """Show the file picker and prompt user to select file(s)"""
 
         path = filedialog.askopenfilename(
-            initialdir=self.defaults["initialDir"], title=self.defaults["title"],  (("jpeg files", "*.jpg"), ("all files", "*.*")))
+            initialdir=self.defaults["initialDir"], title=self.defaults["title"],  filetypes=self.defaults["filetypes"])
 
         # If the path is an empty string
         # the user cancelled, update cancelled
@@ -68,10 +74,3 @@ class FilePicker:
 
         # Clean up tkinter instance
         self.win.destroy()
-
-
-p = FilePicker()
-
-p.prompt()
-
-print(p.wasCancelled())
