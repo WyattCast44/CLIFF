@@ -1,4 +1,5 @@
 from src import Application
+import time
 
 
 def functionBasedOption(app):
@@ -13,3 +14,5 @@ Application({
 }).registerOptions({
     '--f|--flag': functionBasedOption
 }).run()
+
+time.sleep(10)

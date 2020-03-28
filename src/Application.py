@@ -215,6 +215,8 @@ class Application:
             menu = self.container.resolve("HelpMenu")(
                 self, self.config["width"]).render()
 
+        print(self.args)
+
     def __del__(self):
 
         self.container.resolve("EventBus").fire('app:end')
