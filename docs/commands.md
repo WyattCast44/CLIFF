@@ -45,3 +45,25 @@ Usage: app.py [option/command]
 Commands:
   my:command  Show a quick litte help message
 ```
+
+### Working with Parameters
+
+The function must accept an instance of the application as the first parameter
+Any parameters after that will be parsed and used as required parameters, unless you 
+set a default value. See below for an example:
+
+```python
+from cliff import Application
+
+def sayHello(app, name, greeting="Hello,"):
+    """Show a quick litte help message"""
+
+    print(f"\n{greeting} {name}")
+
+Application({
+    'name': 'Example App',
+    'description': 'This is an example CLI app.',
+}).registerCommands({
+    'say:hello': sayHello
+}).run()
+```
