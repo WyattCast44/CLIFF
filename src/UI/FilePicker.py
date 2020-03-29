@@ -86,9 +86,3 @@ class FilePicker:
 
         # Clean up tkinter instance
         self.win.destroy()
-
-
-picker = FilePicker().setTitle('Welp').setFiletypes(
-    [('Config Files', '*.config')]).prompt()
-
-print(picker.getPath(), picker.wasCancelled())

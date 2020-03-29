@@ -13,6 +13,6 @@ Application({
     'description': 'This is an example CLI app.',
 }).registerOptions({
     '--f|--flag': functionBasedOption
+}).registerCommands({
+    'run:app|run:wyatt': functionBasedOption
 }).run()
-
-time.sleep(10)

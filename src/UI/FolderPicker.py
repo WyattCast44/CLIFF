@@ -65,8 +65,3 @@ class FolderPicker:
 
         # Clean up tkinter instance
         self.win.destroy()
-
-
-picker = FolderPicker().setTitle('Welp').prompt()
-
-print(picker.getPath(), picker.wasCancelled())

@@ -3,6 +3,9 @@ import inspect
 from src.Menus import HelpMenu
 from src.Events import EventBus
 from src.Container import Container
+from src.Commands import CommandFinder
+from src.Commands import CommandValidator
+from src.Options import OptionFinder
 
 
 class Application:
@@ -12,7 +15,7 @@ class Application:
         'version': '1.0.0',
         'description': 'Helping you build command line applications',
         'env': 'dev',
-        'width': 55
+        'width': 55,
     }
 
     options = {}
@@ -215,7 +218,30 @@ class Application:
             menu = self.container.resolve("HelpMenu")(
                 self, self.config["width"]).render()
 
-        print(self.args)
+        else:
+
+            # Houston we have arguments, lets first
+            # see if we can find an option that finds
+            # matches the first arg
+            option = OptionFinder(self).search()
+
+            if not option == None:
+
+                # We found a matching option, lets run that option
+                print(f"\nTODO - Run option {option}\n")
+
+                return
+
+            command = CommandFinder(self).search()
+
+            if not command == None:
+
+                # We found a matching command, lets run that command
+                print(f"\nTODO - Run command {command}\n")
+
+                return
+
+            print("\nTODO - Raise a exception, no matching option or command found")
 
     def __del__(self):
 

@@ -52,6 +52,10 @@ The function must accept an instance of the application as the first parameter
 Any parameters after that will be parsed and used as required parameters, unless you 
 set a default value. See below for an example:
 
+In this case, CLIFF will detect you have two parameters, and only one is required. 
+It will validate agaist this and if the user has supplied one parameter, it will pass it as the name
+parameter, if the user passes two parameters, the name and then the greeting parameters will be passed. 
+
 ```python
 from cliff import Application
 
