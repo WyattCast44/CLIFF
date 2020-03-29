@@ -2,6 +2,8 @@ from src import Application
 import time
 from src.UI import FilePicker
 
+# http://docopt.org/
+
 
 def functionBasedOption(app):
     """Show a quick litte help message"""
