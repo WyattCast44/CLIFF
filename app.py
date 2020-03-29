@@ -8,7 +8,8 @@ from src.UI import FilePicker
 def functionBasedOption(app):
     """Show a quick litte help message"""
 
-    path = FilePicker().setTitle('Function File Picker').prompt().getPath()
+    path = FilePicker().setTitle(
+        'Function File Picker').allowMultiple(True).prompt().getPath()
 
     print(path)
 

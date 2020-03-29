@@ -227,6 +227,8 @@ class Application:
 
             if not option == None:
 
+                option(self)
+
                 # We found a matching option, lets run that option
                 print(f"\nTODO - Run option {option}\n")
 

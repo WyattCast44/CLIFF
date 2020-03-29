@@ -10,7 +10,8 @@ class FilePicker:
     defaults = {
         'title': 'Select Files',
         'filetypes': [("All Files", "*.*")],
-        'initialDir': os.getcwd()
+        'initialDir': os.getcwd(),
+        'multiple': False,
     }
 
     def __init__(self, config: dict = {}):
@@ -56,11 +57,21 @@ class FilePicker:
 
         return self
 
+    def allowMultiple(self, allow=True):
+
+        self.defaults["allowMultiple"] = allow
+
+        return self
+
     def prompt(self):
         """Show the file picker and prompt user to select a file"""
 
-        self.path = filedialog.askopenfilename(
-            initialdir=self.defaults["initialDir"], title=self.defaults["title"],  filetypes=self.defaults["filetypes"])
+        if self.defaults["allowMultiple"]:
+            self.path = list(filedialog.askopenfilenames(
+                initialdir=self.defaults["initialDir"], title=self.defaults["title"],  filetypes=self.defaults["filetypes"]))
+        else:
+            self.path = filedialog.askopenfilename(
+                initialdir=self.defaults["initialDir"], title=self.defaults["title"],  filetypes=self.defaults["filetypes"])
 
         # If the path is an empty string
         # the user cancelled, update cancelled
