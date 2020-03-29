@@ -1,11 +1,14 @@
 from src import Application
 import time
+from src.UI import FilePicker
 
 
 def functionBasedOption(app):
     """Show a quick litte help message"""
 
-    print("\nTODO\n")
+    path = FilePicker().setTitle('Function File Picker').prompt().getPath()
+
+    print(path)
 
 
 Application({
