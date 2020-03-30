@@ -246,6 +246,10 @@ class Application:
 
             print("\nTODO - Raise a exception, no matching option or command found")
 
+    def exit(self, code=0):
+
+        return sys.exit(code)
+
     def __del__(self):
 
         self.container.resolve("EventBus").fire('app:end')

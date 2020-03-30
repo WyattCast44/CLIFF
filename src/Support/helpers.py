@@ -4,3 +4,15 @@ def tap(value, callback):
     callback(value)
 
     return value
+
+
+def dd(*values):
+
+    import sys
+    import pprint
+
+    for value in values:
+
+        pprint.pprint(value)
+
+    sys.exit()

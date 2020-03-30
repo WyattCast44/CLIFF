@@ -1,10 +1,12 @@
 import time
 from src import Application
 from src.UI import FilePicker
+from src.Support import helpers
 
 import types
 
 # http://docopt.org/
+# http://effbot.org/librarybook/formatter.htm
 
 
 def functionBasedOption(app):
@@ -19,6 +21,7 @@ def functionBasedOption(app):
 Application({
     'name': 'Example App',
     'description': 'This is an example CLI app.',
+    'version': "0.1.3"
 }).registerOptions({
     '--f|--flag': functionBasedOption
 }).registerCommands({
