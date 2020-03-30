@@ -213,10 +213,11 @@ class Application:
 
         if len(self.args) == 0:
 
-            # HelpMenu(self, self.config["width"]).render()
+            menu = self.container.resolve("HelpMenu")
 
-            menu = self.container.resolve("HelpMenu")(
-                self, self.config["width"]).render()
+            menu(self, self.config["width"]).render()
+
+            return
 
         else:
 

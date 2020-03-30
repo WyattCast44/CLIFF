@@ -1,6 +1,6 @@
 # Commands
 
-The primary differnce between commands and options is that options are parsed first.
+The primary difference between commands and options is when parsing arguments that were passed to the script, the arguments will always be searched against commands first. If a command is found with the given signature and the command has additional arguments the remaining arguments will be parsed as potential command arguments. Any arguments remaining will be compared against all registered options.
 
 ## Using Classes
 
@@ -71,3 +71,7 @@ Application({
     'say:hello': sayHello
 }).run()
 ```
+
+## Hiding Commands from Menu
+
+You can optionally hide commands from the help menu by adding a `hidden = true` property to your class.

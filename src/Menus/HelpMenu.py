@@ -120,7 +120,7 @@ class HelpMenu:
 
                 output = output + f"\n{signature}{desc}"
 
-        return output + "\n"
+        return output
 
     def render(self):
 

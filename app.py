@@ -1,6 +1,8 @@
-from src import Application
 import time
+from src import Application
 from src.UI import FilePicker
+
+import types
 
 # http://docopt.org/
 
@@ -9,7 +11,7 @@ def functionBasedOption(app):
     """Show a quick litte help message"""
 
     path = FilePicker().setTitle(
-        'Function File Picker').allowMultiple(True).prompt().getPath()
+        'Function File Picker').allowMultiple(False).prompt().getPath()
 
     print(path)
 
