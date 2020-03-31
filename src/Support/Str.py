@@ -27,7 +27,7 @@ class Str(metaclass=Macroable):
 
     @staticmethod
     def camel(subject, stripUnderscores=True):
-        """The camel method converts the given string to CamelCase:"""
+        """The camel method converts the given string to CamelCase"""
 
         return ''.join(letter for letter in subject.replace('_', ' ').title() if not letter.isspace())
 
@@ -35,7 +35,6 @@ class Str(metaclass=Macroable):
     def contains(subject, search, caseSensative=False):
 
         # TODO, fix case sensativity
-        #
 
         if type(search) == list:
             found = False
