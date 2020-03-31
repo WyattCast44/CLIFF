@@ -65,7 +65,9 @@ class HelpMenu:
 
             if inspect.isclass(handler):
 
-                output = output + f"\n{signature}{handler.description}"
+                output = output + "\n" + \
+                    stylize(signature, colored.fg('green')) + \
+                    handler.description
 
             elif callable(handler):
 
@@ -74,7 +76,9 @@ class HelpMenu:
                 if not handler.__doc__ == None:
                     desc = handler.__doc__
 
-                output = output + f"\n{signature}{desc}"
+                output = output + "\n" + \
+                    stylize(signature, colored.fg('green')) + \
+                    desc
 
         return output + "\n"
 
