@@ -1,7 +1,11 @@
-from Macroable import Macroable
+from .Macroable import Macroable
 
 
 class Str(metaclass=Macroable):
+
+    @staticmethod
+    def startsWith(subject, search):
+        return (search == subject[0:len(search)])
 
     @staticmethod
     def after(subject, search):
@@ -48,15 +52,3 @@ class Str(metaclass=Macroable):
 
         else:
             return (search in subject)
-
-
-def tap(init, cb):
-
-    cb(init)
-
-    return init
-
-
-val = tap(2, print)
-
-print('val', val)

@@ -6,6 +6,7 @@ from src.Container import Container
 from src.Commands import CommandFinder
 from src.Commands import CommandValidator
 from src.Options import OptionFinder
+from src.Options import OptionValidator
 
 
 class Application:
@@ -71,6 +72,10 @@ class Application:
 
             for option in options:
 
+                if not OptionValidator.validate(option.signature, option):
+
+                    self.exit()
+
                 # Options can be overwritten
                 # I think this is good, because
                 # I'd like users to be able to
@@ -87,6 +92,10 @@ class Application:
             # it is a list of signatures and handlers
 
             for signature, handler in options.items():
+
+                if not OptionValidator.validate(signature, handler):
+
+                    self.exit()
 
                 # Options can be overwritten
                 # I think this is good, because

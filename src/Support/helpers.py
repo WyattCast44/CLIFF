@@ -16,3 +16,11 @@ def dd(*values):
         pprint.pprint(value)
 
     sys.exit()
+
+
+def now():
+    """Return the current time in seconds since the Epoch. Fractions of a second may be present if the system clock provides them."""
+
+    import time
+
+    return time.time()
