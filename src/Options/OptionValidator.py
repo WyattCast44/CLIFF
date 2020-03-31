@@ -1,5 +1,6 @@
 import inspect
 from src.Support import Str
+from src.Exceptions import OptionSignatureValidationError
 
 
 class OptionValidator:
@@ -9,7 +10,8 @@ class OptionValidator:
 
         if not OptionValidator.validateSignature(signature):
 
-            print("\nTODO raise option signature validation error")
+            OptionSignatureValidationError(
+                signature).print()
 
             return False
 

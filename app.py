@@ -25,7 +25,7 @@ app = Application({
     'description': 'This is an example CLI app.',
     'version': "0.1.3"
 }).registerOptions({
-    '--flag|--w': functionBasedOption
+    'flag|--w': functionBasedOption
 }).registerCommands({
     'run:app': functionBasedOption
 }).run()
