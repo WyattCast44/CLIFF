@@ -1,5 +1,7 @@
+import colored
 import inspect
 import textwrap
+from colored import stylize
 
 
 class HelpMenu:
@@ -21,7 +23,7 @@ class HelpMenu:
             self.app.config["description"], self.width))
         padding = " " * (self.width - (len(name) + len(vers)))
 
-        output = f"\n{name}{padding}{vers}\n"
+        output = stylize(f"\n{name}{padding}{vers}\n", colored.fg('green'))
         output = output + f"{'-' * self.width}\n"
         output = output + f"{desc}\n"
         output = output + self.buildUsageLine()
@@ -32,7 +34,7 @@ class HelpMenu:
 
     def buildUsageLine(self):
 
-        return f"\nUsage: {self.app.script} [option/command]\n"
+        return f"\n{stylize('Usage', colored.fg('yellow'))}: {self.app.script} [option/command]\n"
 
     def buildOptionsList(self):
 
@@ -51,7 +53,7 @@ class HelpMenu:
         # option signatures
         maxLength = len(max(self.app.options.keys(), key=len))
 
-        output = "\nOptions:"
+        output = stylize("\nOptions:", colored.fg('yellow'))
 
         # Now lets loop through all signatures
         # and handlers to generate the options
@@ -93,7 +95,7 @@ class HelpMenu:
         # command signatures
         maxLength = len(max(self.app.commands.keys(), key=len))
 
-        output = "\nCommands:"
+        output = stylize("\nCommands:", colored.fg('yellow'))
 
         for signature, handler in self.app.commands.items():
 

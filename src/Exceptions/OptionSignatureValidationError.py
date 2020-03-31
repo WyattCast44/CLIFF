@@ -15,8 +15,8 @@ class OptionSignatureValidationError(Exception):
 
         print(stylize("\nERROR", colored.bg('red')),
               stylize(self.__class__.__name__, colored.fg('red')), '\n')
-        print(f"Given: {self.signature}")
+        print(f"Given:\n - {self.signature}")
         print(
-            f"Expected: Option signatures must start with either a single or double hypen")
+            f"Expected:\n - Option signatures must start with either a single or double hypen")
 
         return
