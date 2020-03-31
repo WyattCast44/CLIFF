@@ -1,33 +1,66 @@
+import string
+import inspect
+from src.Support import Str
+
+
 class CommandValidator:
 
-    def __init__(self, application, command):
+    @staticmethod
+    def validate(signature: str, handler):
 
-        self.app = application
+        if not CommandValidator.validateSignature(signature):
 
-        self.command = command
+            print("\nTODO raise command signature validation error")
 
-        return
+            return False
 
-    def parseSignature(self):
+        if not CommandValidator.validateHandlerAcceptsApplication(handler):
 
-        return
+            print("\nTODO raise option parameter validation error")
 
-    def parseDescription(self):
+            return False
 
-        return
+        return True
 
-    def parseHelpMessage(self):
+    @staticmethod
+    def validateSignature(signature: str):
 
-        return
+        if "|" in signature:
 
-    def parseArguments(self):
+            # We need to split the signature
+            # and validate each one
 
-        return
+            signatures = signature.split('|')
 
-    def parseRequiredArguments(self):
+            for part in signatures:
 
-        return
+                valid = CommandValidator.validateSingleSignature(part)
 
-    def parseOptionalArguments(self):
+                if not valid:
 
-        return
+                    return False
+
+            return True
+
+        else:
+
+            # Only one signature, validate it
+
+            return CommandValidator.validateSingleSignature(signature)
+
+    def validateSingleSignature(signature: str):
+
+        # Command signatures must start
+        # with a lowercase alpha letter
+
+        if not signature[0] in string.ascii_lowercase:
+
+            return False
+
+        return True
+
+    def validateHandlerAcceptsApplication(handler):
+
+        # TODO: Determine how to do this
+
+        return True

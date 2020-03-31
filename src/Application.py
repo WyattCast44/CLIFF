@@ -127,6 +127,10 @@ class Application:
                 # I'd like users to be able to
                 # override any default options
 
+                if not CommandValidator.validate(command.signature, command):
+
+                    self.exit()
+
                 self.eventbus.fire('commands:register', [command])
 
                 self.commands[command.signature] = command
@@ -142,6 +146,10 @@ class Application:
                 # I think this is good, because
                 # I'd like users to be able to
                 # override any default options
+
+                if not CommandValidator.validate(signature, handler):
+
+                    self.exit()
 
                 self.container.resolve("EventBus").fire(
                     'commands:register', [signature, handler])
