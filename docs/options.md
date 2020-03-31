@@ -87,4 +87,7 @@ from cliff.options import Quiet
 Application().registerOptions([
     Quiet
 ]).run()
+
+if self.app.is_quiet():
+    # do something, but do it silently...
 ```
