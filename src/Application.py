@@ -14,7 +14,7 @@ class Application:
     defaults = {
         'name': 'Console Application',
         'version': '1.0.0',
-        'description': 'Helping you build command line applications',
+        'description': 'Helping you build CLI apps',
         'env': 'dev',
         'width': 55,
         'strict_registration': False,

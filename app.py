@@ -1,6 +1,4 @@
-import sys
 from src import Application
-import traceback
 
 
 def functionBasedOption(app):
@@ -16,9 +14,7 @@ def funTwo(app):
 
 Application({
     'name': 'Example App',
-    'description': 'This is an example CLI app.',
-    'version': "0.1.3",
-    'strict_registration': True
+    'description': 'This is an example CLI app.'
 }).registerOptions({
     '-v, --versions': functionBasedOption,
     '-v|--version': funTwo
