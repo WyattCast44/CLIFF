@@ -17,6 +17,7 @@ class Application:
         'description': 'Helping you build command line applications',
         'env': 'dev',
         'width': 55,
+        'strict_registration': False,
     }
 
     options = {}
@@ -72,7 +73,7 @@ class Application:
 
             for option in options:
 
-                if not OptionValidator.validate(option.signature, option):
+                if not OptionValidator.validate(self, option.signature, option):
 
                     self.exit()
 
@@ -93,7 +94,7 @@ class Application:
 
             for signature, handler in options.items():
 
-                if not OptionValidator.validate(signature, handler):
+                if not OptionValidator.validate(self, signature, handler):
 
                     self.exit()
 

@@ -1,73 +1,58 @@
 import inspect
 from src.Support import Str
 from src.Exceptions import OptionSignatureValidationError
+from src import Application
+import functools
 
 
 class OptionValidator:
 
     @staticmethod
-    def validate(signature: str, handler):
+    def validate(application: Application, signature: str, handler):
 
-        if not OptionValidator.validateSignature(signature):
-
-            OptionSignatureValidationError(
-                signature).print()
-
-            return False
-
-        if not OptionValidator.validateHandlerAcceptsApplication(handler):
-
-            print("\nTODO raise option parameter validation error")
-
-            return False
-
-        return True
-
-    @staticmethod
-    def validateSignature(signature: str):
-
+        # We need to check if we need to split the signature into
+        # parts, either by pipe (|) or by comma (,)
         if "|" in signature:
 
-            # We need to split the signature
-            # and validate each one
-
             signatures = signature.split('|')
-
-            for part in signatures:
-
-                part = part.strip()
-
-                valid = OptionValidator.validateSingleSignature(part)
-
-                if not valid:
-
-                    return False
-
-            return True
 
         elif "," in signature:
 
             signatures = signature.split(',')
 
+        else:
+
+            signatures = [signature]
+
+        # We need to strip whitespace off all parts
+        signatures = [part.strip() for part in signatures]
+
+        # We need to validate each part and make sure it
+        # meets naming requirements
+        for part in signatures:
+
+            OptionValidator.__validateSignature(part)
+
+        # We need to check if any part of signature has
+        # already been registered and if we are in strict mode
+        # TODO This is not working because options has the actual
+        # string orginally passed, not the formatted, split version
+        if application.config["strict_registration"]:
+
             for part in signatures:
 
-                part = part.strip()
+                if part in application.options:
 
-                valid = OptionValidator.validateSingleSignature(part)
-
-                if not valid:
+                    print("\nTODO raise duplicate signature error")
 
                     return False
 
-            return True
+        # If we made it here, we know all parts of the signature
+        # are valid :)
+        return True
 
-        else:
-
-            # Only one signature, validate it
-
-            return OptionValidator.validateSingleSignature(signature)
-
-    def validateSingleSignature(signature: str):
+    @staticmethod
+    def __validateSignature(signature: str):
 
         # Options signatures must start
         # with either a single or double hypen
@@ -80,10 +65,11 @@ class OptionValidator:
 
             return True
 
+        # If we get here we know the signature
+        # is invalid, raise exception
+        OptionSignatureValidationError(
+            signature)
+
+        exit()
+
         return False
-
-    def validateHandlerAcceptsApplication(handler):
-
-        # TODO: Determine how to do this
-
-        return True

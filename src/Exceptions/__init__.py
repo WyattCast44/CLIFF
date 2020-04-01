@@ -1,1 +1,2 @@
+from .PrettyException import PrettyException
 from .OptionSignatureValidationError import OptionSignatureValidationError

@@ -1,22 +1,22 @@
 import colored
 from colored import stylize
+from src.Exceptions import PrettyException
 
 
-class OptionSignatureValidationError(Exception):
+class OptionSignatureValidationError(PrettyException):
     pass
 
-    def __init__(self, signature):
+    def __init__(self, signature, config={}):
 
         self.signature = signature
 
-        return
+        self.setName("Option Signature Validation Error")
+        self.setProblem(
+            "Option signatures must start with either a single or double hypen.")
+        self.setGiven(self.signature)
 
-    def print(self):
+        self.build().print()
 
-        print(stylize("\nERROR", colored.bg('red')),
-              stylize(self.__class__.__name__, colored.fg('red')), '\n')
-        print(f"Given:\n - {self.signature}")
-        print(
-            f"Expected:\n - Option signatures must start with either a single or double hypen")
+        exit()
 
         return
