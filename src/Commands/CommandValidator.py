@@ -27,12 +27,27 @@ class CommandValidator:
 
         if "|" in signature:
 
-            # We need to split the signature
-            # and validate each one
-
             signatures = signature.split('|')
 
             for part in signatures:
+
+                part = part.strip()
+
+                valid = CommandValidator.validateSingleSignature(part)
+
+                if not valid:
+
+                    return False
+
+            return True
+
+        elif "," in signature:
+
+            signatures = signature.split(',')
+
+            for part in signatures:
+
+                part = part.strip()
 
                 valid = CommandValidator.validateSingleSignature(part)
 

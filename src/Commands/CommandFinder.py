@@ -24,6 +24,18 @@ class CommandFinder:
 
                 for part in parts:
 
+                    part = part.strip()
+
+                    processedCommands[part] = handler
+
+            if "," in signature:
+
+                parts = signature.split(",")
+
+                for part in parts:
+
+                    part = part.strip()
+
                     processedCommands[part] = handler
 
             else:

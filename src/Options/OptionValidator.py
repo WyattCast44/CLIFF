@@ -35,6 +35,24 @@ class OptionValidator:
 
             for part in signatures:
 
+                part = part.strip()
+
+                valid = OptionValidator.validateSingleSignature(part)
+
+                if not valid:
+
+                    return False
+
+            return True
+
+        elif "," in signature:
+
+            signatures = signature.split(',')
+
+            for part in signatures:
+
+                part = part.strip()
+
                 valid = OptionValidator.validateSingleSignature(part)
 
                 if not valid:

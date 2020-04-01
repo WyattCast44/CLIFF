@@ -24,6 +24,18 @@ class OptionFinder:
 
                 for part in parts:
 
+                    part = part.strip()
+
+                    processedOptions[part] = handler
+
+            if "," in signature:
+
+                parts = signature.split(",")
+
+                for part in parts:
+
+                    part = part.strip()
+
                     processedOptions[part] = handler
 
             else:
