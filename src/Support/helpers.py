@@ -24,3 +24,11 @@ def now():
     import time
 
     return time.time()
+
+
+def s(str: str):
+    """Return an extended string class with additional convience methods"""
+
+    from src.Support import StrExtended
+
+    return StrExtended(str)
