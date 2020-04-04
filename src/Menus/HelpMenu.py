@@ -110,10 +110,10 @@ class HelpMenu:
 
                 if hasattr(handler, "description"):
                     output = output + \
-                        f"\n{signature}{handler.description}"
+                        f"\n{stylize(signature, colored.fg('green'))}{handler.description}"
                 elif not handler.__doc__ == None:
                     output = output + \
-                        f"\n{signature}{handler.__doc__}"
+                        f"\n{stylize(signature, colored.fg('green'))}{handler.__doc__}"
                 else:
                     output = output + f"\n{signature}"
 
@@ -124,7 +124,8 @@ class HelpMenu:
                 if not handler.__doc__ == None:
                     desc = handler.__doc__
 
-                output = output + f"\n{signature}{desc}"
+                output = output + \
+                    f"\n{stylize(signature, colored.fg('green'))}{desc}"
 
         return output
 

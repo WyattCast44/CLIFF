@@ -8,6 +8,7 @@ def functionBasedOption(app):
 
 
 def funTwo(app):
+    """Doc string desc"""
 
     print(app)
 
@@ -19,5 +20,6 @@ Application({
     '-v, --versions': functionBasedOption,
     '-v|--version': funTwo
 }).registerCommands({
-    'run:app': functionBasedOption
+    'run:app': functionBasedOption,
+    'serve': functionBasedOption
 }).run()
