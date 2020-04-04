@@ -2,10 +2,10 @@ from src import Application
 from commands import ShowHelpMenu
 
 
-def functionBasedOption(app):
+def showVersion(app):
     """Show a quick litte help message"""
 
-    print(app)
+    print(app.config['version'])
 
 
 def funTwo(app):
@@ -18,7 +18,7 @@ Application({
     'name': 'Example App',
     'description': 'This is an example CLI app.'
 }).registerOptions({
-    '-v, --versions': functionBasedOption
+    '-V, --version': showVersion
 }).registerCommands([
     ShowHelpMenu
 ]).run()
