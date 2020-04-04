@@ -1,4 +1,5 @@
 from src import Application
+from commands import ShowHelpMenu
 
 
 def functionBasedOption(app):
@@ -17,9 +18,7 @@ Application({
     'name': 'Example App',
     'description': 'This is an example CLI app.'
 }).registerOptions({
-    '-v, --versions': functionBasedOption,
-    '-v|--version': funTwo
+    '-v, --versions': functionBasedOption
 }).registerCommands({
-    'run:app': functionBasedOption,
-    'serve': functionBasedOption
+    'serve': ShowHelpMenu
 }).run()
