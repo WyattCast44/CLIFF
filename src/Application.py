@@ -132,7 +132,8 @@ class Application:
 
                     self.exit()
 
-                self.eventbus.fire('commands:register', [command])
+                self.container.resolve("EventBus").fire(
+                    'commands:register', [command])
 
                 self.commands[command.signature] = command
 

@@ -19,6 +19,6 @@ Application({
     'description': 'This is an example CLI app.'
 }).registerOptions({
     '-v, --versions': functionBasedOption
-}).registerCommands({
-    'serve': ShowHelpMenu
-}).run()
+}).registerCommands([
+    ShowHelpMenu
+]).run()
