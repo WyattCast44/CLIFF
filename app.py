@@ -1,20 +1,15 @@
 from src import Application
 from commands import ShowHelpMenu
+from src.Support.helpers import s
 
 
 def showVersion(app):
     """Show a quick litte help message"""
 
-    print(app.config['version'])
+    print(s(app.config['version']).green())
 
 
-def funTwo(app):
-    """Doc string desc"""
-
-    print(app)
-
-
-Application({
+app = Application({
     'name': 'Example App',
     'description': 'This is an example CLI app.'
 }).registerOptions({

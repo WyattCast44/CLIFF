@@ -250,7 +250,7 @@ class Application:
                 option(self)
 
                 # We found a matching option, lets run that option
-                print(f"\nTODO - Run option {option}\n")
+                # print(f"\nTODO - Run option {option}\n")
 
                 return
 
