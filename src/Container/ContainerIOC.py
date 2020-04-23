@@ -1,10 +1,222 @@
 import inspect
 
+"""
+@link https://gist.github.com/davejamesmiller/bd857d9b0ac895df7604dd2e63b23afe
+"""
 
-class ContainerIOC:
 
-    # Singleton instance
+class Singleton:
+
     _instance = None
+
+    def __new__(cls):
+        """
+        Manages the creation of a singleton class
+        """
+
+        if cls._instance == None:
+
+            cls._instance = super(Singleton, cls).__new__(cls)
+
+        return cls._instance
+
+    def getInstance(self):
+
+        return self._instance
+
+
+class ContainerNew(Singleton):
+
+    # The containers bindings
+    bindings = {}  # { {'shared': bool, 'concrete': None|concrete} }
+
+    # The containers shared instances
+    instances = {}
+
+    # The containers registered aliases
+    aliases = {}
+
+    # The containers resolved abstracts
+    resolved = {}
+
+    def bound(self, key) -> bool:
+        """
+        Determine if the given key has been bound.
+        """
+
+        if key in self.bindings:
+
+            return True
+
+        if key in self.instances:
+
+            return True
+
+        if key in self.aliases:
+
+            return True
+
+        return False
+
+    def has(self, key) -> bool:
+        """
+        Determine if the given key has been bound.
+        """
+
+        return self.bound(key)
+
+    def hasResolved(self, abstract) -> bool:
+        """
+        Determine if the given abstract has been resolved
+        """
+
+        if abstract in self.aliases:
+
+            abstract = self.getAlias(abstract)
+
+        if abstract in self.resolved:
+
+            return True
+
+        if abstract in self.instances:
+
+            return True
+
+        return False
+
+    def getAlias(self, abstract):
+        """
+        Get an aliases base abstract
+        """
+
+        if not abstract in self.aliases:
+
+            return abstract
+
+        return self.getAlias(self.aliases[abstract])
+
+    def getBindings(self) -> dict:
+        """
+        Return the list of registered bindings
+        """
+
+        return self.bindings
+
+    def isShared(self, abstract) -> bool:
+        """
+        Determine if a given type is shared
+        """
+
+        if abstract in self.instances:
+
+            return True
+
+        if abstract in self.bindings:
+
+            if self.bindings[abstract]['shared']:
+
+                return True
+
+        return False
+
+    def bind(self, abstract, concrete=None, shared=False):
+        """
+        Register a binding with the container
+        """
+
+        # If no concrete type was given, we will simply set the concrete type to the abstract type.
+        if concrete == None:
+
+            concrete = abstract
+
+        # After that, the concrete type to be registered as shared without being
+        # forced to state their classes in both of the parameters.
+
+        # If the factory is not a Closure, it means it is just a class name which is bound
+        # into this container to the abstract type and we will just wrap it up inside its
+        # own Closure to give us more convenience when extending.
+
+        if not self.isfunc(concrete):
+
+            concrete = self.getfunc(abstract, concrete)
+
+        self.bindings[abstract] = {
+            'shared': shared,
+            'concrete:': concrete
+        }
+
+    def bindIf(self, abstract, concrete=None, shared=False):
+        """
+        Bind an abstract into the container only if it hasn't been bound before
+        """
+
+        if not self.bound(abstract):
+
+            self.bind(abstract, concrete, shared)
+
+    def singleton(self, abstract, concrete=None):
+        """
+        Register a shared binding in the container
+        """
+
+        self.bind(abstract, concrete, shared=True)
+
+    def singletonIf(self, abstract, concrete=None):
+        """
+        Register a shared binding if it hasn't already been bound.
+        """
+
+        if not self.bound(abstract):
+
+            self.singleton(abstract, concrete)
+
+    def isfunc(self, abstract) -> bool:
+        """
+        Determine if a given abstract is a function
+        """
+
+        if inspect.isfunction(abstract):
+
+            return True
+
+        if inspect.isbuiltin(abstract):
+
+            return True
+
+        return False
+
+    def getfunc(self, abstract, concrete):
+        """
+        Used to wrap a abstact type in a function
+        """
+
+        def tmp(container, parameters=[]):
+
+            if abstract == concrete:
+
+                return self.build(concrete)
+
+            return self.resolve(concrete, parameters)
+
+        return tmp
+
+
+app = ContainerNew()
+
+
+class Two:
+
+    pass
+
+
+app.bind(Two())
+
+print(app.getBindings())
+
+quit()
+
+
+class ContainerIOC(Singleton):
 
     # An array of the types that have been resolved
     resolved = {}
@@ -33,31 +245,20 @@ class ContainerIOC:
     # The parameter override stack
     withStack = []
 
-    def __new__(cls):
+    def bound(self, key) -> bool:
         """
-        Manages the creation of the singleton container class.
-        """
-
-        if cls._instance == None:
-
-            cls._instance = super(ContainerIOC, cls).__new__(cls)
-
-        return cls._instance
-
-    def bound(self, abstract) -> bool:
-        """
-        Determine if the given abstract type has been bound.
+        Determine if the given key has been bound.
         """
 
-        if abstract in self.bindings:
+        if key in self.bindings:
 
             return True
 
-        if abstract in self.instances:
+        if key in self.instances:
 
             return True
 
-        if abstract in self.aliases:
+        if key in self.aliases:
 
             return True
 
@@ -65,7 +266,7 @@ class ContainerIOC:
 
     def has(self, key) -> bool:
         """
-        Check if a given abstract is bound into the container.
+        Determine if the given key has been bound.
         """
 
         return self.bound(key)
@@ -243,7 +444,7 @@ class ContainerIOC:
 
         return items
 
-    def make(abstract, parameters=[]):
+    def make(self, abstract, parameters=[]):
 
         return self.resolve(abstract, parameters)
 
@@ -270,12 +471,20 @@ class ContainerIOC:
         else:
             obj = self.make(concrete)
 
+    def build(self, concrete):
+
+        # If the concrete type is actually a Closure, we will just execute it and hand back the results of the functions, which allows functions to be used as resolvers for more fine-tuned resolution of these objects.
+        if self.isfunc(concrete):
+            return concrete(self)
+
+        return
+
     def getConcrete(self, abstract):
 
         # If we don't have a registered resolver or concrete for the type, we'll just  assume each type is a concrete name and will attempt to resolve it as is since the container should be able to resolve concretes automatically.
 
         if abstract in self.bindings:
-            return self.bindings[abstract]['concrete']
+            return self.bindings[abstract].get('concrete')
 
         return abstract
 
@@ -285,7 +494,7 @@ class ContainerIOC:
 
             return True
 
-        if isfunc(concrete):
+        if self.isfunc(concrete):
 
             return True
 
@@ -350,31 +559,5 @@ class ContainerIOC:
         self.instances = {}
         self.abstractAliases = {}
 
-    # def __setattr__(self, key, value):
-
-    #     self[key] = value
-
-    # def __getattribute__(self, key):
-
-    #     return self[key]
-
 
 app = ContainerIOC()
-
-
-class Test:
-
-    pass
-
-
-class Two:
-    pass
-
-
-class Three:
-    pass
-
-
-app.bind(Test, Two)
-app.bind(Two, Three)
-app.resolve(Two)
