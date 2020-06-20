@@ -185,6 +185,9 @@ class Application:
 
                 uknown.append(param)
 
+        # Actually Run the stacks
+        # code	co_argcount	number of arguments (not including * or ** args)
+
         for option in optionsStack:
 
             handler = self._options.get(option)
