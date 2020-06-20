@@ -1,33 +1,48 @@
 from cliff import Application
 
 
+def main(application: Application, params=None):
+    """Docstring description"""
+    pass
+
+
 class Test:
+
+    def __init__(self, application: Application):
+
+        self.application = application
 
     def get_signature():
 
-        return "v"
+        return "print"
 
-    def handle(app):
+    def handle(self, params=None):
 
-        print(f"\nName: {app._config.get('name')}")
-        print(f"Description: {app._config.get('description')}")
-        print(f"Version: {app._config.get('version')}")
+        print(f"\nName: {self.application._config.get('name')}")
+        print(f"Description: {self.application._config.get('description')}")
+        print(f"Version: {self.application._config.get('version')}")
 
 
 class EnvChanger:
 
     signature = "--prod"
 
-    def handle(app):
+    def __init__(self, app):
 
-        app._config.set('env', 'prod')
+        self.app = app
+
+    def handle(self):
+
+        self.app._config.set('env', 'prod')
 
 
 app = Application({
     'name': "Test",
-    'version': '2.1.2.rc'
+    'version': '2.1.2.rc',
 }).registerCommands([
-    Test
-]).registerOptions([
+    Test,
+]).registerCommands({
+    'main': main
+}).registerOptions([
     EnvChanger
 ]).run()

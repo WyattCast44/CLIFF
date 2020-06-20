@@ -5,8 +5,12 @@ class VersionOption:
 
     signature = "--v"
 
-    def handle(application: Application):
+    def __init__(self, application: Application):
 
-        print(f'\nv{application._config.get("version")}')
+        self.application = application
 
-        application.exit(0)
+    def handle(self):
+
+        print(f'\nv{self.application._config.get("version")}')
+
+        self.application.exit(0)

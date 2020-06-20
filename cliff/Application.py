@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sys
 import string
 import inspect
@@ -35,15 +36,13 @@ class Application:
 
         self._params = sys.argv[1:]
 
-    def _registerInternalOptions(self):
+    def _registerInternalOptions(self) -> None:
 
         self.registerOptions([
             VersionOption
         ])
 
-        return
-
-    def registerOptions(self, options):
+    def registerOptions(self, options) -> Application:
 
         if type(options) == list:
 
@@ -83,18 +82,19 @@ class Application:
                 self._options.set(signature, handler)
 
         else:
+
             raise Exception(
                 "Unrecognized format for registering option", "Details: https://google.com")
 
         return self
 
-    def _registerInternalCommands(self):
+    def _registerInternalCommands(self) -> None:
 
         self.registerCommands([
             ListCommand
         ])
 
-    def registerCommands(self, commands):
+    def registerCommands(self, commands) -> Application:
 
         if type(commands) == list:
 
@@ -134,85 +134,104 @@ class Application:
                 self._commands.set(signature, handler)
 
         else:
+
             raise Exception(
                 "Unrecognized format for registering command", "Details: https://google.com")
 
         return self
 
-    def setDefaultCommand(self, command):
+    def setDefaultCommand(self, command: callable) -> Application:
 
         self._defaultCommand = command
 
         return self
 
     def hasDefaultCommand(self) -> bool:
-        """Check if the application has a default command set"""
 
         return self._defaultCommand != None
 
-    def run(self):
+    def runCommand(self, command, params=None):
+
+        handler = self._commands.get(command)
+
+        if inspect.isclass(handler):
+
+            if len(inspect.signature(handler).parameters) > 0:
+                handler(self).handle(params)
+            else:
+                handler().handle(self, params)
+
+        elif inspect.isfunction(handler):
+
+            handler(self, params)
+
+        return self
+
+    def run(self) -> None:
 
         optionsStack = []
 
         commandsStack = []
 
-        for param in self._params:
+        commandFound = False
 
-            if param[0] == "-" or param[0:1] == "--":
-
-                if self._options.has(param):
-
-                    optionsStack.append(param)
-
-            elif self._commands.has(param):
-
-                commandsStack.append(param)
-
-            else:
-
-                pass
-
-        # We now have the options and commands stack we need to filter the params
-        uknown = []
+        commandParams = []
 
         for param in self._params:
 
-            if param in optionsStack or param in commandsStack:
+            if not commandFound:
 
-                pass
+                if param[0] == "-" or param[0:1] == "--":
+
+                    if self._options.has(param):
+
+                        optionsStack.append(param)
+
+                elif self._commands.has(param):
+
+                    commandsStack.append(param)
+
+                    commandFound = True
+
+                else:
+
+                    pass
 
             else:
 
-                uknown.append(param)
+                commandParams.append(param)
 
-        # Actually Run the stacks
-        # code	co_argcount	number of arguments (not including * or ** args)
+        if len(optionsStack) == 0 and len(commandsStack) == 0:
+
+            if self.hasDefaultCommand():
+
+                self.runCommand(self._defaultCommand)
+
+            else:
+
+                self.exit(0)
 
         for option in optionsStack:
 
             handler = self._options.get(option)
 
             if hasattr(handler, "handle"):
-                handler.handle(self)
+                handler(self).handle()
             else:
                 handler(self)
 
         for command in commandsStack:
 
-            handler = self._commands.get(command)
+            self.runCommand(command, commandParams)
 
-            if hasattr(handler, "handle"):
-                handler.handle(self)
-            else:
-                handler(self)
+        if self._config.get('env') == "dev":
+            print("\nOptions Stack:", optionsStack)
+            print("Commands Stack:", commandsStack)
+            print("Command Params:", commandParams)
+            # print("App:", self._config.items())
+            # print("Options:", self._options.items())
+            # print("Commands:", self._commands.items())
 
-        print("\nOptions Stack:", optionsStack)
-        print("Commands Stack:", commandsStack)
-        print("App:", self._config.items())
-        print("Options:", self._options.items())
-        print("Commands:", self._commands.items())
-        print("Uknown Stack:", uknown)
+    def exit(self, code=0) -> None:
 
-    def exit(self, code=0):
-
-        quit(code)
+        sys.exit(code)
