@@ -1,5 +1,7 @@
 class PrintOptions:
 
+    signature = "print:options"
+
     def __init__(self, application):
 
         self.application = application

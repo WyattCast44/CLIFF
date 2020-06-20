@@ -194,6 +194,12 @@ class Application:
 
         commandParams = []
 
+        if len(self._params) == 0 and self.hasDefaultCommand:
+
+            self.runCommand(self._defaultCommand)
+
+            self.exit(0)
+
         for param in self._params:
 
             if not commandFound:
@@ -218,14 +224,6 @@ class Application:
 
                 commandParams.append(param)
 
-        if len(optionsStack) == 0 and len(commandsStack) == 0:
-
-            if self.hasDefaultCommand():
-
-                self.runCommand(self._defaultCommand)
-
-            self.exit(0)
-
         for option in optionsStack:
 
             handler = self._options.get(option)
@@ -239,13 +237,7 @@ class Application:
 
             self.runCommand(command, commandParams)
 
-        if self._config.get('env') == "dev":
-            print("\nOptions Stack:", optionsStack)
-            print("Commands Stack:", commandsStack)
-            print("Command Params:", commandParams)
-            # print("App:", self._config.items())
-            # print("Options:", self._options.items())
-            # print("Commands:", self._commands.items())
+        self.exit(0)
 
     def exit(self, code=0) -> None:
 
