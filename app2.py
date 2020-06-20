@@ -1,4 +1,5 @@
 from cliff import Application
+from cliff.Commands import PrintCommands
 
 
 def main(application: Application, params=None):
@@ -44,7 +45,8 @@ Application({
     'name': "Test",
     'version': '2.1.2.rc',
 }).registerCommands([
-    Test
+    Test,
+    PrintCommands
 ]).registerOptions([
     EnvChanger
 ]).setDefaultCommand(Test).run()

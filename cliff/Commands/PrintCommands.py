@@ -1,5 +1,7 @@
 class PrintCommands:
 
+    signature = "print:commands"
+
     def __init__(self, application):
 
         self.application = application
