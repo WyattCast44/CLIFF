@@ -27,64 +27,13 @@ class Application:
 
         self._config.merge(config)
 
-        self._registerInternalCommands()
-
         self._registerInternalOptions()
+
+        self._registerInternalCommands()
 
         self._config.set('script', sys.argv[0])
 
         self._params = sys.argv[1:]
-
-    def _registerInternalCommands(self):
-
-        self.registerCommands([
-            ListCommand
-        ])
-
-    def registerCommands(self, commands):
-
-        if type(commands) == list:
-
-            for command in commands:
-
-                if hasattr(command, "signature"):
-
-                    signature = command.signature
-
-                elif hasattr(command, "getSignature"):
-
-                    signature = command.getSignature()
-
-                elif hasattr(command, "get_signature"):
-
-                    signature = command.get_signature()
-
-                else:
-
-                    raise Exception(
-                        "The given command does not have a recognizable signature", "Command:", command)
-
-                if not signature[0] in string.ascii_lowercase:
-                    raise Exception("The commands signature is not a valid format",
-                                    "Command: ", command, "Signature: ", signature, "Details: https://google.com")
-
-                self._commands.set(signature, command)
-
-        elif type(commands) == dict:
-
-            for signature, handler in commands.items():
-
-                if not signature[0] in string.ascii_lowercase:
-                    raise Exception("The commands signature is not a valid format",
-                                    "Command: ", handler, "Signature: ", signature, "Details: https://google.com")
-
-                self._commands.set(signature, handler)
-
-        else:
-            raise Exception(
-                "Unrecognized format for registering command", "Details: https://google.com")
-
-        return self
 
     def _registerInternalOptions(self):
 
@@ -136,6 +85,57 @@ class Application:
         else:
             raise Exception(
                 "Unrecognized format for registering option", "Details: https://google.com")
+
+        return self
+
+    def _registerInternalCommands(self):
+
+        self.registerCommands([
+            ListCommand
+        ])
+
+    def registerCommands(self, commands):
+
+        if type(commands) == list:
+
+            for command in commands:
+
+                if hasattr(command, "signature"):
+
+                    signature = command.signature
+
+                elif hasattr(command, "getSignature"):
+
+                    signature = command.getSignature()
+
+                elif hasattr(command, "get_signature"):
+
+                    signature = command.get_signature()
+
+                else:
+
+                    raise Exception(
+                        "The given command does not have a recognizable signature", "Command:", command)
+
+                if not signature[0] in string.ascii_lowercase:
+                    raise Exception("The commands signature is not a valid format",
+                                    "Command: ", command, "Signature: ", signature, "Details: https://google.com")
+
+                self._commands.set(signature, command)
+
+        elif type(commands) == dict:
+
+            for signature, handler in commands.items():
+
+                if not signature[0] in string.ascii_lowercase:
+                    raise Exception("The commands signature is not a valid format",
+                                    "Command: ", handler, "Signature: ", signature, "Details: https://google.com")
+
+                self._commands.set(signature, handler)
+
+        else:
+            raise Exception(
+                "Unrecognized format for registering command", "Details: https://google.com")
 
         return self
 
