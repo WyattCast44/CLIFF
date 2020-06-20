@@ -1,4 +1,6 @@
 from cliff import Application
+from .PrintOptions import PrintOptions
+from .PrintCommands import PrintCommands
 
 
 class ListCommand:
@@ -12,17 +14,21 @@ class ListCommand:
     def handle(self, params=None):
 
         if len(params) == 0:
-            print("\nList all options and commands")
-            self.application.exit(0)
 
-        if params[0] == "options":
-            print("\nList all options")
-            self.application.exit(0)
+            PrintOptions(self.application).handle()
 
-        if params[0] == "commands":
-            print("\nList all commands")
-            self.application.exit(0)
+            PrintCommands(self.application).handle()
 
-        # check for command namespaces
+        else:
+
+            if params[0] == "options":
+
+                PrintOptions(self.application).handle()
+
+            if params[0] == "commands":
+
+                PrintCommands(self.application).handle()
+
+        self.application.exit(0)
 
         raise Exception("Uknown parameter passed to 'list', please try again")

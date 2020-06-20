@@ -3,6 +3,10 @@ from cliff import Application
 
 def main(application: Application, params=None):
     """Docstring description"""
+
+    def get_signature():
+        return "subsig"
+
     pass
 
 
@@ -31,18 +35,16 @@ class EnvChanger:
 
         self.app = app
 
-    def handle(self):
+    def handle(self, params=None):
 
         self.app._config.set('env', 'prod')
 
 
-app = Application({
+Application({
     'name': "Test",
     'version': '2.1.2.rc',
 }).registerCommands([
-    Test,
-]).registerCommands({
-    'main': main
-}).registerOptions([
+    Test
+]).registerOptions([
     EnvChanger
-]).run()
+]).setDefaultCommand(Test).run()
