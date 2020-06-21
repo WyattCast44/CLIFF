@@ -3,8 +3,6 @@ import sys
 import string
 import inspect
 from cliff.Support import Repository
-from cliff.Commands import ListCommand
-from cliff.Options import VersionOption
 
 
 class Application:
@@ -14,7 +12,7 @@ class Application:
         'description': 'Helping you build CLI apps',
         'version': '1.0.0',
         'env': 'dev',
-        'width': 55
+        'width': 70
     })
 
     _defaultCommand = None
@@ -39,9 +37,7 @@ class Application:
 
     def _registerInternalOptions(self) -> None:
 
-        self.registerOptions([
-            VersionOption
-        ])
+        pass
 
     def registerOptions(self, options) -> Application:
 
@@ -91,9 +87,7 @@ class Application:
 
     def _registerInternalCommands(self) -> None:
 
-        self.registerCommands([
-            ListCommand
-        ])
+        pass
 
     def registerCommands(self, commands) -> Application:
 

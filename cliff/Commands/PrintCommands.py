@@ -12,4 +12,4 @@ class PrintCommands:
 
         for command in self.application._commands.items():
 
-            print(f"* {command}")
+            print(f"> {command}")

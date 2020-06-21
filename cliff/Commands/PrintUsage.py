@@ -13,7 +13,7 @@ class PrintUsage:
 
         print(f"\nUsage:")
 
-        message = f"> {self.application._config.get('script')} [option(s)] command [argument(s)w]"
+        message = f"> {self.application._config.get('script')} [option(s)] command [argument(s)]"
 
         message = textwrap.fill(message, self.application._config.get('width'))
 
