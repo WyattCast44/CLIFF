@@ -1,3 +1,6 @@
+import textwrap
+
+
 class PrintOptions:
 
     signature = "print:options"
@@ -12,4 +15,4 @@ class PrintOptions:
 
         for option in self.application._options.items():
 
-            print(f" {option}")
+            print(f" {textwrap.fill(option, self.application._config.get('width'))}")

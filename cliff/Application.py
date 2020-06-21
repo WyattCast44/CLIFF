@@ -14,6 +14,7 @@ class Application:
         'description': 'Helping you build CLI apps',
         'version': '1.0.0',
         'env': 'dev',
+        'width': 55
     })
 
     _defaultCommand = None
@@ -160,6 +161,12 @@ class Application:
                 "The given command does not have a recognizable signature", "Command:", command)
 
         self._defaultCommand = signature
+
+        if not self._commands.has(signature):
+
+            self.registerCommands([
+                command
+            ])
 
         return self
 
