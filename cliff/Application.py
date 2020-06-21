@@ -4,6 +4,7 @@ import sys
 import string
 import inspect
 from cliff.Support import Repository
+from cliff.Commands import MakeCommand
 
 
 class Application:
@@ -41,7 +42,7 @@ class Application:
 
         pass
 
-    def registerOptions(self, options) -> Application:
+    def registerOptions(self, options, env=None) -> Application:
 
         if type(options) == list:
 
@@ -89,9 +90,17 @@ class Application:
 
     def _registerInternalCommands(self) -> None:
 
-        pass
+        self.registerCommands([
+            MakeCommand
+        ], 'dev')
 
-    def registerCommands(self, commands) -> Application:
+    def registerCommands(self, commands, env=None) -> Application:
+
+        if env != None:
+
+            if self._config.get('env') != env:
+
+                return self
 
         if type(commands) == list:
 

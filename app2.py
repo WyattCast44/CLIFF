@@ -10,3 +10,8 @@ Application({
 ]).registerOptions([
     SilentOption
 ]).setDefaultCommand(PrintMainMenu).run()
+
+
+'''
+CLAP - Command Line Applications in Python
+'''

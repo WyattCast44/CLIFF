@@ -13,6 +13,6 @@ class PrintOptions:
 
         print(f"\nAvailable Options:")
 
-        for option in self.application._options.items():
+        for option in sorted(self.application._options.items()):
 
             print(f" {textwrap.fill(option, self.application._config.get('width'))}")

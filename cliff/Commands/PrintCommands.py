@@ -10,6 +10,6 @@ class PrintCommands:
 
         print(f"\nAvailable Commands:")
 
-        for command in self.application._commands.items():
+        for command in sorted(self.application._commands.items()):
 
             print(f"> {command}")
