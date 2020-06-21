@@ -4,6 +4,7 @@ from .PrintCommands import PrintCommands
 
 
 class PrintMainMenu:
+    """Print the application main menu"""
 
     signature = "print:menu"
 

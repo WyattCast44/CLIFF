@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 import sys
 import string
 import inspect
@@ -12,7 +13,8 @@ class Application:
         'description': 'Helping you build CLI apps',
         'version': '1.0.0',
         'env': 'dev',
-        'width': 70
+        'width': 70,
+        'silent': False,
     })
 
     _defaultCommand = None
@@ -234,6 +236,9 @@ class Application:
             else:
                 handler(self)
 
+        if self._config.get('silent'):
+            sys.stdout = open(os.devnull, 'w')
+
         for command in commandsStack:
 
             self.runCommand(command, commandParams)
@@ -243,3 +248,7 @@ class Application:
     def exit(self, code=0) -> None:
 
         sys.exit(code)
+
+    def __del__(self):
+
+        sys.stdout = sys.__stdout__
