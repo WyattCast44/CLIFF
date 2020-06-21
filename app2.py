@@ -2,16 +2,27 @@ from cliff import Application
 from cliff.Options import SilentOption
 from cliff.Commands import PrintMainMenu, HelpCommand
 
-Application({
+app = Application({
     'name': "Testing Application",
-}).registerCommands([
+    'env': 'dev',
+})
+
+app.registerProviders([
     HelpCommand,
+])
+
+app.registerCommands([
     PrintMainMenu,
-]).registerOptions([
+])
+
+app.registerOptions([
     SilentOption
-]).setDefaultCommand(PrintMainMenu).run()
+])
 
+app.registerCommands([
+    HelpCommand,
+], 'dev')
 
-'''
-CLAP - Command Line Applications in Python
-'''
+app.setDefaultCommand(PrintMainMenu)
+
+app.run()

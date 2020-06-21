@@ -254,6 +254,14 @@ class Application:
 
         self.exit(0)
 
+    def config(self):
+
+        return self._config
+
+    def registerProviders(self, providers) -> Application:
+
+        pass
+
     def exit(self, code=0) -> None:
 
         sys.exit(code)
