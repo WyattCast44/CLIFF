@@ -4,15 +4,11 @@ from cliff.Commands import PrintMainMenu, HelpCommand
 
 app = Application({
     'name': "Testing Application",
-    'env': 'dev',
+    'description': "This is a demo application for CLIFF"
 })
 
 app.registerProviders([
     HelpCommand,
-])
-
-app.registerCommands([
-    PrintMainMenu,
 ])
 
 app.registerOptions([
@@ -20,6 +16,8 @@ app.registerOptions([
 ])
 
 app.registerCommands([
+    PrintMainMenu,
+]).registerCommands([
     HelpCommand,
 ], 'dev')
 
