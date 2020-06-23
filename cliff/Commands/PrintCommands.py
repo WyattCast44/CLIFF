@@ -1,3 +1,7 @@
+import inspect
+import types
+
+
 class PrintCommands:
 
     signature = "print:commands"
@@ -10,6 +14,33 @@ class PrintCommands:
 
         print(f"\nAvailable Commands:")
 
-        for command in sorted(self.application._commands.items()):
+        commands = self.application._commands.items()
 
-            print(f"> {command}")
+        for signature in sorted(commands):
+
+            handler = commands.get(signature)
+
+            if hasattr(handler, "description"):
+
+                if type(handler.description) == types.FunctionType:
+                    description = handler.description()
+                else:
+                    description = handler.description
+
+            elif hasattr(handler, "getDescription"):
+
+                description = handler.getDescription()
+
+            elif hasattr(handler, "get_description"):
+
+                description = handler.get_description()
+
+            elif handler.__doc__ != None:
+
+                description = inspect.cleandoc(handler.__doc__)
+
+            else:
+
+                description = ""
+
+            print(f"> {signature}   {description}")
