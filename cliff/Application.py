@@ -24,19 +24,21 @@ class Application:
 
     _options = Repository({})
 
+    _providers = []
+
     _params = None
 
     def __init__(self, config: dict = {}):
 
         self._config.merge(config)
 
-        self._registerInternalOptions()
-
-        self._registerInternalCommands()
-
         self._config.set('script', sys.argv[0])
 
         self._params = sys.argv[1:]
+
+        self._registerInternalOptions()
+
+        self._registerInternalCommands()
 
     def _registerInternalOptions(self) -> None:
 
@@ -198,6 +200,8 @@ class Application:
 
     def run(self) -> None:
 
+        self._bootProviders()
+
         optionsStack = []
 
         commandsStack = []
@@ -260,7 +264,14 @@ class Application:
 
     def registerProviders(self, providers) -> Application:
 
-        pass
+        for provider in providers:
+            self._providers.append(provider)
+
+    def _bootProviders(self):
+
+        for provider in self._providers:
+
+            provider(self).boot()
 
     def exit(self, code=0) -> None:
 

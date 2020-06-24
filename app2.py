@@ -1,6 +1,7 @@
 from cliff import Application
 from cliff.Options import SilentOption
 from cliff.Commands import PrintMainMenu, HelpCommand
+from providers import CatProvider
 
 app = Application({
     'name': "Testing Application",
@@ -8,7 +9,7 @@ app = Application({
 })
 
 app.registerProviders([
-    HelpCommand,
+    CatProvider
 ])
 
 app.registerOptions([
