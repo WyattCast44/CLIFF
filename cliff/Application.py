@@ -40,6 +40,8 @@ class Application:
 
         self._registerInternalCommands()
 
+        self._registerProviders()
+
     def _registerInternalOptions(self) -> None:
 
         pass
@@ -269,9 +271,15 @@ class Application:
 
     def _bootProviders(self):
 
-        for provider in self._providers:
+        for provider in self.config().get('providers'):
 
             provider(self).boot()
+
+    def _registerProviders(self):
+
+        for provider in self.config().get('providers'):
+
+            provider(self).register()
 
     def exit(self, code=0) -> None:
 

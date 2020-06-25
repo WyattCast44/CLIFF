@@ -7,9 +7,11 @@ class CatProvider:
 
         self.application = application
 
-    def boot(self):
+    def register(self):
 
-        self.application.config().set('env', 'prod')
+        pass
+
+    def boot(self):
 
         self.application.registerCommands([
             YoloCommand
