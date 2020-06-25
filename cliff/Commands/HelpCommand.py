@@ -3,7 +3,7 @@ import textwrap
 
 
 class HelpCommand:
-    """Get information on a given command"""
+    """The help command displays help for a given command"""
 
     signature = "help"
 
@@ -12,7 +12,7 @@ class HelpCommand:
         self.application = application
 
     def handle(self, params=None):
-        """Paramter: command => the command that you would like to display the help for"""
+        """The help command displays help for a given command"""
 
         if len(params) == 0:
             self._subject = "help"
