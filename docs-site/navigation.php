@@ -10,6 +10,10 @@ return [
 
             'Installation' => 'docs/installation',
 
+            'Quick Start' => 'docs/quick-start',
+
+            'Service Providers' => 'docs/service-providers',
+
             'Customizing Your Site' => 'docs/customizing-your-site',
             'Navigation' => 'docs/navigation',
             'Algolia DocSearch' => 'docs/algolia-docsearch',
@@ -18,5 +22,17 @@ return [
         ],
 
     ],
+
+    'Example Applications' => [
+
+        'url' => 'docs/example-applications', 
+
+        'children' => [
+
+            'Recreating Cat' => 'docs/installation',
+
+        ]
+
+    ]
 
 ];

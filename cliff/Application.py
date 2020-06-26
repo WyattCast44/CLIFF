@@ -24,7 +24,7 @@ class Application:
 
     _options = Repository({})
 
-    _providers = []
+    _registeredProviders = []
 
     _params = None
 
@@ -264,22 +264,21 @@ class Application:
 
         return self._config
 
-    def registerProviders(self, providers) -> Application:
-
-        for provider in providers:
-            self._providers.append(provider)
-
     def _bootProviders(self):
 
-        for provider in self.config().get('providers'):
+        for provider in self._registeredProviders:
 
-            provider(self).boot()
+            provider.boot()
 
     def _registerProviders(self):
 
         for provider in self.config().get('providers'):
 
-            provider(self).register()
+            tmp = provider(self)
+
+            tmp.register()
+
+            self._registeredProviders.append(tmp)
 
     def exit(self, code=0) -> None:
 
