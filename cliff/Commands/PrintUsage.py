@@ -1,4 +1,5 @@
 import textwrap
+from cliff.helpers import s
 
 
 class PrintUsage:
@@ -11,7 +12,7 @@ class PrintUsage:
 
     def handle(self, params=None):
 
-        print(f"\nUsage:")
+        print(s("\nUsage:").yellow())
 
         message = f"> {self.application._config.get('script')} [option(s)] command [argument(s)]"
 

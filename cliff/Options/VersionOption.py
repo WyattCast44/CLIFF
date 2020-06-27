@@ -1,4 +1,5 @@
 from cliff import Application
+from cliff.helpers import s
 
 
 class VersionOption:
@@ -11,6 +12,6 @@ class VersionOption:
 
     def handle(self):
 
-        print(f'\nv{self.application._config.get("version")}')
+        print(f'\n{s("v").green()}{self.application.config()["version"]}')
 
         self.application.exit(0)

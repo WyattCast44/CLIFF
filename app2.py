@@ -1,12 +1,13 @@
 from cliff import Application
-from cliff.Options import SilentOption
+from cliff.Options import SilentOption, VersionOption
 from cliff.Commands import PrintMainMenu, HelpCommand
 
 app = Application({
     'name': "Testing Application",
     'description': "This is a demo application",
 }).registerOptions([
-    SilentOption
+    VersionOption,
+    SilentOption,
 ]).registerCommands([
     HelpCommand,
     PrintMainMenu,

@@ -3,6 +3,8 @@ from .PrintOptions import PrintOptions
 from .PrintCommands import PrintCommands
 from .PrintMenuHeader import PrintMenuHeader
 
+import os
+
 
 class PrintMainMenu:
     """Print the application main menu"""

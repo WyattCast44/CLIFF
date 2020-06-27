@@ -77,7 +77,7 @@ class Application:
 
                 self._options.set(signature, option)
 
-                return self
+            return self
 
         elif type(options) == dict:
 

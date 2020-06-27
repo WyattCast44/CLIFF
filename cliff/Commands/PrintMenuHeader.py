@@ -1,4 +1,5 @@
 import textwrap
+from cliff.helpers import s
 
 
 class PrintMenuHeader:
@@ -11,6 +12,10 @@ class PrintMenuHeader:
 
     def handle(self, params=None):
 
-        print(
-            f"\n{self.application.config()['name']} - {self.application.config()['version']}")
-        print(f"{self.application.config()['description']}")
+        name = self.application.config()['name']
+        version = self.application.config()['version']
+        desc = self.application.config()['description']
+
+        print(f"\n{s(name).green()} - {version}")
+
+        print(f"\n{s(desc).color('dark_gray')}")

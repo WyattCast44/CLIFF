@@ -1,4 +1,5 @@
 import textwrap
+from cliff.helpers import s
 
 
 class PrintOptions:
@@ -11,7 +12,7 @@ class PrintOptions:
 
     def handle(self, params=None):
 
-        print(f"\nAvailable Options:")
+        print(s("\nAvailable Options:").yellow())
 
         for option in sorted(self.application._options.items()):
 

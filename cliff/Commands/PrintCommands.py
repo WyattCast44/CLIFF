@@ -1,6 +1,7 @@
 import types
 import inspect
 import textwrap
+from cliff.helpers import s
 
 
 class PrintCommands:
@@ -11,18 +12,25 @@ class PrintCommands:
 
         self.application = application
 
+        self.commands = self.application._commands.items()
+
     def handle(self, params=None):
 
-        print(f"\nAvailable Commands:")
+        maxLength = 0
 
-        commands = self.application._commands.items()
+        for signature in self.commands:
 
-        print(commands)
-        quit()
+            signature = s(signature).green()
 
-        for signature in sorted(commands):
+            if len(signature) > maxLength:
 
-            handler = commands.get(signature)
+                maxLength = len(signature)
+
+        print(s("\nAvailable Commands:").yellow())
+
+        for signature in sorted(self.commands):
+
+            handler = self.commands.get(signature)
 
             if hasattr(handler, "description"):
 
@@ -47,9 +55,5 @@ class PrintCommands:
 
                 description = ""
 
-            message = f"> {signature}  {description}"
-
-            message = textwrap.fill(
-                message, self.application._config.get('width'), subsequent_indent="  ")
-
-            print(message)
+            print(
+                f"> {s(signature).green():<{maxLength + 3}}{description}")

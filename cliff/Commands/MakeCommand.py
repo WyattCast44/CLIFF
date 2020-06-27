@@ -2,6 +2,7 @@ from cliff import Application
 
 
 class MakeCommand:
+    """Generate a new command class"""
 
     signature = "make:command"
 
