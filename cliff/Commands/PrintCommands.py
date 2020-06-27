@@ -1,5 +1,6 @@
-import inspect
 import types
+import inspect
+import textwrap
 
 
 class PrintCommands:
@@ -43,4 +44,9 @@ class PrintCommands:
 
                 description = ""
 
-            print(f"> {signature}   {description}")
+            message = f"> {signature}  {description}"
+
+            message = textwrap.fill(
+                message, self.application._config.get('width'), subsequent_indent="  ")
+
+            print(message)

@@ -1,6 +1,7 @@
 from .PrintUsage import PrintUsage
 from .PrintOptions import PrintOptions
 from .PrintCommands import PrintCommands
+from .PrintMenuHeader import PrintMenuHeader
 
 
 class PrintMainMenu:
@@ -14,6 +15,7 @@ class PrintMainMenu:
 
     def handle(self, params=None):
 
+        PrintMenuHeader(self.application).handle()
         PrintUsage(self.application).handle()
         PrintOptions(self.application).handle()
         PrintCommands(self.application).handle()

@@ -1,24 +1,15 @@
 from cliff import Application
-from cliff.helpers import config
 from cliff.Options import SilentOption
-from providers import CatProvider, RequestProvider
 from cliff.Commands import PrintMainMenu, HelpCommand
 
 app = Application({
     'name': "Testing Application",
-    'description': "This is a demo application for CLIFF",
-    "providers": [
-        CatProvider,
-        RequestProvider
-    ]
+    'description': "This is a demo application",
 }).registerOptions([
     SilentOption
 ]).registerCommands([
-    PrintMainMenu,
-]).registerCommands([
     HelpCommand,
-], 'dev')
-
-app.setDefaultCommand(PrintMainMenu)
+    PrintMainMenu,
+]).setDefaultCommand(PrintMainMenu)
 
 app.run()
