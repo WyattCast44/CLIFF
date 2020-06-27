@@ -1,6 +1,6 @@
-class RequestProvider:
+class RequestProvider(object):
 
-    def __init__(self, application):
+    def __init__(self, application) -> None:
 
         self.application = application
 

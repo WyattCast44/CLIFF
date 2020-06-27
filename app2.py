@@ -4,8 +4,6 @@ from cliff.Options import SilentOption
 from providers import CatProvider, RequestProvider
 from cliff.Commands import PrintMainMenu, HelpCommand
 
-import os
-
 app = Application({
     'name': "Testing Application",
     'description': "This is a demo application for CLIFF",

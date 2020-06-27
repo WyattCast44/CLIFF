@@ -16,6 +16,10 @@ class Application:
         'env': 'dev',
         'width': 70,
         'silent': False,
+        'providers': [],
+        'listTest': [
+            1, 2, 3
+        ]
     })
 
     _defaultCommand = None

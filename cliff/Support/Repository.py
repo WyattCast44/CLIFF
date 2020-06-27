@@ -1,7 +1,29 @@
+import json
+import inspect
+
+
 class Repository:
 
     def __init__(self, items={}) -> None:
         self.store = items
+
+    def all(self):
+        ''''Get the dict of items'''
+        return self.store
+
+    def values(self):
+
+        return list(self.store.values())
+
+    def without(self, keys):
+
+        tmp = {}
+
+        for key, value in self.store.items():
+            if not key in keys:
+                tmp[key] = value
+
+        return tmp
 
     def items(self) -> dict:
         ''''Get the dict of items'''
@@ -22,6 +44,29 @@ class Repository:
     def merge(self, items: dict) -> None:
         '''Merge the given items into the store'''
         self.store.update(items)
+
+    def __len__(self):
+
+        return len(self.store)
+
+    def __getitem__(self, key):
+
+        return self.get(key)
+
+    def __setitem__(self, key, value):
+
+        return self.set(key, value)
+
+    def __delitem__(self, key):
+
+        if self.has(key):
+
+            self.store.pop(key)
+
+    def __contains__(self, key):
+
+        return self.has(key)
+
 
 # class Collection:
 
