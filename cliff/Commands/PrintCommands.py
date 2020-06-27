@@ -17,6 +17,9 @@ class PrintCommands:
 
         commands = self.application._commands.items()
 
+        print(commands)
+        quit()
+
         for signature in sorted(commands):
 
             handler = commands.get(signature)
