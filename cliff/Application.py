@@ -11,15 +11,12 @@ class Application:
 
     _config = Repository({
         'name': 'Console Application',
-        'description': 'Helping you build CLI apps',
+        'description': 'A simple CLI application',
         'version': '1.0.0',
         'env': 'dev',
         'width': 70,
         'silent': False,
         'providers': [],
-        'listTest': [
-            1, 2, 3
-        ]
     })
 
     _defaultCommand = None
@@ -255,8 +252,8 @@ class Application:
             else:
                 handler(self)
 
-        if self._config.get('silent'):
-            sys.stdout = open(os.devnull, 'w')
+            if self._config.get('silent'):
+                sys.stdout = open(os.devnull, 'w')
 
         for command in commandsStack:
 

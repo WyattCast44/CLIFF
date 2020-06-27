@@ -16,6 +16,6 @@ class PrintMenuHeader:
         version = self.application.config()['version']
         desc = self.application.config()['description']
 
-        print(f"\n{s(name).green()} - {version}")
+        print(f"\n{s(name).green()} - v{version}")
 
         print(f"\n{s(desc).color('dark_gray')}")

@@ -17,4 +17,4 @@ class RequestProvider(object):
 
 def main(application, params=None):
 
-    print("\n", application.config().items())
+    print("\nTEST: This was registered by a provider")
