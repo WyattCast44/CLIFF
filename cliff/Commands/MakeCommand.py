@@ -11,7 +11,7 @@ class MakeCommand:
         self.application = application
 
     def handle(self, params=None):
-        """Generates a new command class file in your root 'commands' directory. Also updated __init__.py file in your root `commands` directory"""
+        """Generates a new command class file in your root 'commands' directory. Also updates __init__.py file in your root `commands` directory"""
 
         print("\nTODO")
 
