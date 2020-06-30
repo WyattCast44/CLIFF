@@ -6,6 +6,7 @@ import inspect
 from cliff.Support import Repository
 from cliff.Commands import MakeCommand
 from cliff.Commands import CommandValidator
+from cliff.Options import OptionValidator
 
 
 class Application:
@@ -38,40 +39,23 @@ class Application:
 
         self._params = sys.argv[1:]
 
-        self._registerInternalOptions()
-
         self._registerInternalCommands()
 
         self._registerProviders()
 
-    def _registerInternalOptions(self) -> None:
-
-        pass
-
     def registerOptions(self, options, env=None) -> Application:
+
+        if env != None:
+
+            if self._config.get('env') != env:
+
+                return self
 
         if type(options) == list:
 
             for option in options:
 
-                if hasattr(option, "signature"):
-
-                    signature = option.signature
-
-                elif hasattr(option, "getSignature"):
-
-                    signature = option.getSignature()
-
-                elif hasattr(option, "get_signature"):
-
-                    signature = option.get_signature()
-
-                else:
-
-                    raise Exception(
-                        "The given option does not have a recognizable signature", "Option:", option)
-
-                # TODO Validate signature
+                signature, option = OptionValidator(self).validate(option)
 
                 self._options.set(signature, option)
 
@@ -79,13 +63,12 @@ class Application:
 
         elif type(options) == dict:
 
-            for signature, handler in options.items():
+            for signature, option in options.items():
 
-                if not signature[0] == "-":
-                    raise Exception("The options signature is not a valid format",
-                                    "Option: ", handler, "Signature: ", signature, "Details: https://google.com")
+                signature, option = OptionValidator(
+                    self).validate(option, signature)
 
-                self._options.set(signature, handler)
+                self._options.set(signature, option)
 
         else:
 
