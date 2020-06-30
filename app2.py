@@ -1,16 +1,19 @@
+from pprint import pprint
 from cliff import Application
-from providers import RequestProvider
+from providers import RequestProvider, DatabaseProvider
 from cliff.Options import SilentOption, VersionOption
 from cliff.Commands import PrintMainMenu, HelpCommand
 
 app = Application({
     'name': "Testing Application",
+    'version': "1.0.2",
     'providers': [
-        RequestProvider
+        RequestProvider,
+        DatabaseProvider
     ]
 }).registerOptions([
-    VersionOption,
     SilentOption,
+    VersionOption,
 ]).registerCommands([
     HelpCommand,
     PrintMainMenu,

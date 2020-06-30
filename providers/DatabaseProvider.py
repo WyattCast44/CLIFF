@@ -1,7 +1,5 @@
-from .YoloCommand import YoloCommand
 
-
-class CatProvider:
+class DatabaseProvider:
 
     def __init__(self, application):
 
@@ -13,6 +11,4 @@ class CatProvider:
 
     def boot(self):
 
-        self.application.registerCommands([
-            YoloCommand
-        ])
+        pass
