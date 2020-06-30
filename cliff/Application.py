@@ -117,22 +117,7 @@ class Application:
 
     def setDefaultCommand(self, command: callable) -> Application:
 
-        if hasattr(command, "signature"):
-
-            signature = command.signature
-
-        elif hasattr(command, "getSignature"):
-
-            signature = command.getSignature()
-
-        elif hasattr(command, "get_signature"):
-
-            signature = command.get_signature()
-
-        else:
-
-            raise Exception(
-                "The given command does not have a recognizable signature", "Command:", command)
+        signature, command = CommandValidator(self).validate(command)
 
         self._defaultCommand = signature
 
