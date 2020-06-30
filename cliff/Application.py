@@ -11,6 +11,8 @@ from cliff.Options import OptionValidator
 
 class Application:
 
+    # This is the base configuration for
+    # the application
     _config = Repository({
         'name': 'Console Application',
         'description': 'A simple CLI application',
@@ -21,38 +23,105 @@ class Application:
         'providers': [],
     })
 
+    # If a default command has been set
+    # this will be set to the signature
+    # of the command
     _defaultCommand = None
 
-    _commands = Repository({})
-
+    # This holds all registered options
     _options = Repository({})
 
+    # This holds all registered commands
+    _commands = Repository({})
+
+    # This holds are providers that have
+    # have the "register" method called
+    # on them, it will be a list of service
+    # provider instances, waiting for thier
+    # boot methods to be called
     _registeredProviders = []
 
+    # This holds are the parameters passed
+    # to the script, it will be a list
     _params = None
 
     def __init__(self, config: dict = {}):
 
+        # The first thing we do is merge the
+        # user config and the base config
         self._config.merge(config)
 
+        # Next we grab the name of the script
+        # and store it in the config repo
         self._config.set('script', sys.argv[0])
 
+        # Next we set the params property to
+        # any parameters passed to the script
         self._params = sys.argv[1:]
 
-        self._registerInternalCommands()
-
+        # Next we loop thru any providers and
+        # call the register method, these instances
+        # will be stored in the registeredProviders
+        # property
         self._registerProviders()
 
-    def registerOptions(self, options, env=None) -> Application:
+    def getEnv(self) -> str:
 
+        return self.config().get('env')
+
+    def envIs(self, toCheck: str) -> bool:
+
+        return self.getEnv() == toCheck
+
+    def registerOptions(self, options, env=None) -> Application:
+        """Allows you to register multiple options with the application.
+
+        Args:
+            options (list, dict): The option(s) to register
+            env (str): Register the option(s) if the application env is equal to the value passed. If no value is passed, the option(s) will be registered in all envs
+
+        Returns:
+            self: Returns the application instance.
+
+        Examples:
+
+        Register a class based option
+
+        Application().registerOptions([
+            MyOptionClass
+        ])
+
+        Register a class based option, but only if the application enviroment == dev 
+
+        Application().registerOptions([
+            MyOptionClass
+        ], 'dev')
+
+        Register a function based option
+
+        Application().registerOptions({
+            '--signature': myFunction
+        })
+        """
+
+        # First we will check if the user passed an env
+        # option. If so, we will check if the current env
+        # is equal to what they passed, if not, we will
+        # just return early
         if env != None:
 
-            if self._config.get('env') != env:
+            if not self.envIs(env):
 
                 return self
 
+        # Now we need to determine what type of data structure
+        # they passed in
         if type(options) == list:
 
+            # If it is a list, we can assume they passed in a
+            # list of class based options. We will iterate through
+            # and validate, if they pass validation, we will
+            # register the option into the options repo
             for option in options:
 
                 signature, option = OptionValidator(self).validate(option)
@@ -63,6 +132,12 @@ class Application:
 
         elif type(options) == dict:
 
+            # If it is a dict, we can assume they passed in a
+            # dict where the keys are the signatures, and the
+            # values are the handlers. We will iterate thru
+            # the options, validate the signature and handlder
+            # and if it passes we will register the option into
+            # the options repo
             for signature, option in options.items():
 
                 signature, option = OptionValidator(
@@ -72,8 +147,11 @@ class Application:
 
         else:
 
+            # If they passed some other data structure, we
+            # have no current way to parse the option, raise an
+            # exception and exit
             raise Exception(
-                "Unrecognized format for registering option", "Details: https://google.com")
+                "Unrecognized format for registering options", "Options:", options, "Documentation: https://google.com")
 
         return self
 

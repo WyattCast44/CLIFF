@@ -2,7 +2,7 @@ from pprint import pprint
 from cliff import Application
 from providers import RequestProvider, DatabaseProvider
 from cliff.Options import SilentOption, VersionOption
-from cliff.Commands import PrintMainMenu, HelpCommand
+from cliff.Commands import PrintMainMenu, HelpCommand, MakeCommand
 
 app = Application({
     'name': "Testing Application",
@@ -17,6 +17,8 @@ app = Application({
 ]).registerCommands([
     HelpCommand,
     PrintMainMenu,
-]).setDefaultCommand(PrintMainMenu)
+]).registerCommands([
+    MakeCommand
+], 'prod').setDefaultCommand(PrintMainMenu)
 
 app.run()
