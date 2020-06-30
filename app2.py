@@ -18,6 +18,6 @@ app = Application({
     PrintMainMenu,
 ]).registerCommands([
     MakeCommand
-], 'prod').setDefaultCommand(PrintMainMenu)
+], 'dev').setDefaultCommand(PrintMainMenu)
 
 app.run()
