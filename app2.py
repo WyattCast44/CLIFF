@@ -1,4 +1,3 @@
-from pprint import pprint
 from cliff import Application
 from providers import RequestProvider, DatabaseProvider
 from cliff.Options import SilentOption, VersionOption
