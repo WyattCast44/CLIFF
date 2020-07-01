@@ -237,7 +237,7 @@ class Application:
         return self
 
     def setDefaultCommand(self, command) -> Application:
-        """Allows you to set the default command for the application. This command will be ran when no other options or commands are passed.
+        """Allows you to set the default command for the application. This command will be ran when no other options or commands are passed. If the command has not been registered using registerCommands(), it will automatically be registered.
 
         Args:
             command (class): The class based command to set
@@ -343,7 +343,12 @@ class Application:
 
         self.exit(0)
 
-    def config(self):
+    def config(self) -> Repository:
+        """Returns the repository of config values
+
+        Returns:
+            Repository
+        """
 
         return self._config
 
