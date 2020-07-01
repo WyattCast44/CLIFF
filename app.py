@@ -1,19 +1,23 @@
-from src import Application
-from commands import ShowHelpMenu
-from src.Support.helpers import s
-
-
-def showVersion(app):
-    """Show the application version"""
-
-    print(s(app.config['version']).green())
-
+from cliff import Application
+from providers import RequestProvider, DatabaseProvider
+from cliff.Options import SilentOption, VersionOption
+from cliff.Commands import PrintMainMenu, HelpCommand, MakeCommand
 
 app = Application({
-    'name': 'Example App',
-    'description': 'This is an example CLI app.'
-}).registerOptions({
-    '--v, --version': showVersion
-}).registerCommands([
-    ShowHelpMenu
-]).run()
+    'name': "Testing Application",
+    'version': "1.0.2",
+    'providers': [
+        RequestProvider,
+        DatabaseProvider
+    ]
+}).registerOptions([
+    SilentOption,
+    VersionOption,
+]).registerCommands([
+    HelpCommand,
+    PrintMainMenu,
+]).registerCommands([
+    MakeCommand
+], 'dev').setDefaultCommand(PrintMainMenu)
+
+app.run()
