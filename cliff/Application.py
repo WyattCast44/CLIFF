@@ -35,7 +35,7 @@ class Application:
     _commands = Repository({})
 
     # This holds are providers that have
-    # have the "register" method called
+    # had the "register" method called
     # on them, it will be a list of service
     # provider instances, waiting for thier
     # boot methods to be called
