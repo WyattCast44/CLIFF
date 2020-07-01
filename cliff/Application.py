@@ -136,7 +136,7 @@ class Application:
             # If it is a dict, we can assume they passed in a
             # dict where the keys are the signatures, and the
             # values are the handlers. We will iterate thru
-            # the options, validate the signature and handlder
+            # the options, validate the signature and handler
             # and if it passes we will register the option into
             # the options repo
             for signature, option in options.items():
@@ -157,15 +157,54 @@ class Application:
         return self
 
     def registerCommands(self, commands, env=None) -> Application:
+        """Allows you to register multiple commands with the application.
 
+        Args:
+            commands (list, dict): The command(s) to register
+            env (str): Register the command(s) if the application env is equal to the value passed. If no value is passed, the command(s) will be registered in all enviroments
+
+        Returns:
+            self: Returns the application instance.
+
+        Examples:
+
+        Register a class based command
+
+        Application().registerCommands([
+            MyCommandClass
+        ])
+
+        Register a class based command, but only if the application enviroment == dev 
+
+        Application().registerOptions([
+            MyCommandClass
+        ], 'dev')
+
+        Register a function based option
+
+        Application().registerOptions({
+            'signature': myFunctionName
+        })
+        """
+
+        # First we will check if the user passed an env
+        # option. If so, we will check if the current env
+        # is equal to what they passed, if not, we will
+        # just return early
         if env != None:
 
-            if self._config.get('env') != env:
+            if not self.envIs(env):
 
                 return self
 
+        # Now we need to determine what type of data structure
+        # they passed in
         if type(commands) == list:
 
+            # If it is a list, we can assume they passed in a
+            # list of class based commands. We will iterate through
+            # and validate, if they pass validation, we will
+            # register the command into the commands repo
             for command in commands:
 
                 signature, command = CommandValidator(self).validate(command)
@@ -174,6 +213,12 @@ class Application:
 
         elif type(commands) == dict:
 
+            # If it is a dict, we can assume they passed in a
+            # dict where the keys are the signatures, and the
+            # values are the handlers. We will iterate thru
+            # the commands, validate the signature and handler
+            # and if it passes we will register the command into
+            # the commands repo
             for signature, handler in commands.items():
 
                 signature, command = CommandValidator(
@@ -183,17 +228,32 @@ class Application:
 
         else:
 
+            # If they passed some other data structure, we
+            # have no current way to parse the command, raise an
+            # exception and exit
             raise Exception(
                 "Unrecognized format for registering commands", "Commands:", commands, "Documentation: https://google.com")
 
         return self
 
-    def setDefaultCommand(self, command: callable) -> Application:
+    def setDefaultCommand(self, command) -> Application:
+        """Allows you to set the default command for the application. This command will be ran when no other options or commands are passed.
 
+        Args:
+            command (class): The class based command to set
+
+        Returns:
+            self: Returns the application instance.
+        """
+
+        # The first thing we do is validate the command
         signature, command = CommandValidator(self).validate(command)
 
+        # Next we set the signature
         self._defaultCommand = signature
 
+        # If the command has not been registered, we
+        # will just register it for the user
         if not self._commands.has(signature):
 
             self.registerCommands([
