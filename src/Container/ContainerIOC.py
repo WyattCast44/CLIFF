@@ -201,7 +201,7 @@ class ContainerNew(Singleton):
         return tmp
 
 
-app = ContainerNew()
+# app = ContainerNew()
 
 
 class Two:
@@ -209,11 +209,11 @@ class Two:
     pass
 
 
-app.bind(Two())
+# app.bind(Two())
 
-print(app.getBindings())
+# print(app.getBindings())
 
-quit()
+# quit()
 
 
 class ContainerIOC(Singleton):
@@ -560,4 +560,4 @@ class ContainerIOC(Singleton):
         self.abstractAliases = {}
 
 
-app = ContainerIOC()
+# app = ContainerIOC()

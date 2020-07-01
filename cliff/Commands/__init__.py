@@ -1,3 +1,4 @@
+from .DumpConfig import DumpConfig
 from .PrintUsage import PrintUsage
 from .HelpCommand import HelpCommand
 from .MakeCommand import MakeCommand

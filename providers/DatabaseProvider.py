@@ -1,3 +1,6 @@
+import sqlite3
+from cliff import Application
+
 
 class DatabaseProvider:
 
@@ -7,7 +10,9 @@ class DatabaseProvider:
 
     def register(self):
 
-        pass
+        db = sqlite3.connect('app.db')
+
+        self.application.macro('db', db.cursor)
 
     def boot(self):
 

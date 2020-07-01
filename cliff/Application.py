@@ -368,6 +368,10 @@ class Application:
 
             self._registeredProviders.append(tmp)
 
+    def macro(self, name, handler):
+
+        setattr(self, name, handler)
+
     def exit(self, code=0) -> None:
 
         sys.exit(code)

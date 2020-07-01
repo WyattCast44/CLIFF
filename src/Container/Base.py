@@ -243,7 +243,7 @@ class ContainerNew(Singleton):
         return tmp
 
 
-app = ContainerNew()
+# app = ContainerNew()
 
 
 class Two:
@@ -256,6 +256,6 @@ def myf():
     pass
 
 
-app.singleton(Two)
+# app.singleton(Two)
 
-print(app.getInstances())
+# print(app.getInstances())
