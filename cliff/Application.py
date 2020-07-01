@@ -156,12 +156,6 @@ class Application:
 
         return self
 
-    def _registerInternalCommands(self) -> None:
-
-        self.registerCommands([
-            MakeCommand
-        ], 'dev')
-
     def registerCommands(self, commands, env=None) -> Application:
 
         if env != None:
@@ -190,7 +184,7 @@ class Application:
         else:
 
             raise Exception(
-                "Unrecognized format for registering command", "Details: https://google.com")
+                "Unrecognized format for registering commands", "Commands:", commands, "Documentation: https://google.com")
 
         return self
 

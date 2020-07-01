@@ -30,11 +30,11 @@ class Repository:
         return key in self.store
 
     def get(self, key, defaultValue=None):
-        '''Get the specified configuration value'''
+        '''Get the specified value from the repo, you can pass a default value as the second parameter.'''
         return self.store.get(key, defaultValue)
 
     def set(self, key, value) -> None:
-        '''Set the specified configuration value'''
+        '''Set the specified value in the repo'''
         self.store[key] = value
 
     def merge(self, items: dict) -> None:
