@@ -41,8 +41,9 @@ class Application:
     # boot methods to be called
     _registeredProviders = []
 
-    # This holds are the parameters passed
-    # to the script, it will be a list
+    # This is a list of all the parameters
+    # passed to the script, if none were
+    # passed, it will be an empty list
     _params = None
 
     def __init__(self, config: dict = {}):
