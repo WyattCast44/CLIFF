@@ -12,6 +12,6 @@ class VersionOption:
 
     def handle(self):
 
-        print(f'\n{s("v").green()}{self.application.config()["version"]}')
+        print(f'\nv{self.application.config()["version"]}')
 
         self.application.exit(0)
