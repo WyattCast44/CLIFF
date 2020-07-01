@@ -1,5 +1,6 @@
 import inspect
 import textwrap
+from cliff.helpers import s
 
 
 class HelpCommand:
@@ -65,13 +66,13 @@ class HelpCommand:
 
     def _printDescription(self):
 
-        print("\nDescription:")
+        print(s("\nDescription:").green())
         print(textwrap.fill(
             f" {self._getDescription()}", self.application._config.get('width'), subsequent_indent=" "))
 
     def _printUsage(self):
 
-        print("\nUsage:")
+        print(s("\nUsage:").green())
         print(textwrap.fill(
             f"> {self.application._config.get('script')} {self._subject} [argument(s)]", self.application._config.get('width'), subsequent_indent=" "))
 
@@ -89,6 +90,6 @@ class HelpCommand:
 
             return
 
-        print("\nDetails:")
+        print(s("\nDetails:").green())
         print(textwrap.fill(" " + self._handler.handle.__doc__,
                             self.application._config.get('width'), subsequent_indent=" "))
