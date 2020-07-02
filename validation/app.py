@@ -8,19 +8,7 @@ paramList = {
 
 inputs = sys.argv[1:]
 
-for inn in inputs:
-
-    if "-" in inn or "--" in inn:
-
-        if inn in paramList:
-            print(f"map to {inn}")
-        else:
-            print('print error')
-
-    else:
-        pass
-
-print("\n", paramList)
+print("\n", inputs)
 
 quit()
 
