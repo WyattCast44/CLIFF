@@ -4,7 +4,7 @@ from cliff.helpers import s
 
 
 class HelpCommand:
-    """The help command displays help for a given command"""
+    """Displays help for a given command or option"""
 
     signature = "help"
 
@@ -13,7 +13,6 @@ class HelpCommand:
         self.application = application
 
     def handle(self, params=None):
-        """The help command displays help for a given command"""
 
         if params == None or len(params) == 0:
             self._subject = "help"
