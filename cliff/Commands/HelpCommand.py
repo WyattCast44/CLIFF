@@ -1,3 +1,4 @@
+import types
 import inspect
 import textwrap
 from cliff.helpers import s
@@ -59,7 +60,7 @@ class HelpCommand:
 
         else:
 
-            description = "TBD - Function"
+            description = command.__doc__
 
         return description
 

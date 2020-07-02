@@ -23,12 +23,11 @@ app = Application({
         DigitalOcean
     ]
 }).registerCommands([
-    HelpCommand,
-    PrintMainMenu
+    HelpCommand
 ]).registerCommands({
     'droplets:list': listDroplets,
-    'droplets:create' listDroplets,
-    'droplets:shutdown' listDroplets,
+    'droplets:create': listDroplets,
+    'droplets:shutdown': listDroplets,
 }).setDefaultCommand(PrintMainMenu)
 
 app.run()
