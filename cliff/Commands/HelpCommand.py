@@ -25,6 +25,7 @@ class HelpCommand:
         self._printDescription()
         self._printUsage()
         self._printDetails()
+        self._printArgs()
 
         self.application.exit(0)
 
@@ -93,3 +94,17 @@ class HelpCommand:
         print(s("\nDetails:").green())
         print(textwrap.fill(" " + self._handler.handle.__doc__,
                             self.application._config.get('width'), subsequent_indent=" "))
+
+    def _printArgs(self):
+
+        if not inspect.isclass(self._handler):
+
+            return
+
+        if not hasattr(self._handler, "handle"):
+
+            return
+
+        print()
+        print(self._handler.handle.__code__)
+        quit()
