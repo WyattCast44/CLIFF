@@ -16,7 +16,7 @@ def listDroplets(application, params=None):
         print(droplet.name)
 
 
-app = Application({
+Application({
     'name': "Digitial Ocean CLI",
     'version': '0.0.1',
     'providers': [
@@ -27,7 +27,5 @@ app = Application({
 ]).registerCommands({
     'droplets:list': listDroplets,
     'droplets:create': listDroplets,
-    'droplets:shutdown': listDroplets,
-}).setDefaultCommand(PrintMainMenu)
-
-app.run()
+    'droplets:shutdown': listDroplets
+}).setDefaultCommand(PrintMainMenu).run()
