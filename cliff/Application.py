@@ -46,6 +46,24 @@ class Application:
     # passed, it will be an empty list
     _params = None
 
+    _protectedMacroNames = [
+        '__init__',
+        'getEnv',
+        'envIs',
+        'registerOptions',
+        'registerCommands',
+        'setDefaultCommand',
+        'hasDefaultCommand',
+        'runCommand',
+        'run',
+        'config',
+        '_bootProviders',
+        '_registerProviders',
+        'macro',
+        'exit',
+        '__del__',
+    ]
+
     def __init__(self, config: dict = {}):
 
         # The first thing we do is merge the
@@ -369,6 +387,10 @@ class Application:
             self._registeredProviders.append(tmp)
 
     def macro(self, name, handler):
+
+        if name in self._protectedMacroNames:
+            raise Exception("Cannot register macro with protected name.",
+                            "Name:", name, "Documentation: https://google.com")
 
         setattr(self, name, handler)
 

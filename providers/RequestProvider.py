@@ -1,3 +1,6 @@
+import requests
+
+
 class RequestProvider(object):
 
     def __init__(self, application) -> None:
@@ -6,15 +9,8 @@ class RequestProvider(object):
 
     def register(self):
 
-        self.application.config().set('key', 1)
+        self.application.macro('get', requests.get)
 
     def boot(self):
 
-        self.application.registerCommands({
-            'request': main
-        })
-
-
-def main(application, params=None):
-
-    print("\nTEST: This was registered by a provider")
+        pass
