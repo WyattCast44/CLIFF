@@ -15,7 +15,7 @@ class Application:
     # the application
     _config = Repository({
         'name': 'Console Application',
-        'description': 'A simple CLI application',
+        'description': '',
         'version': '1.0.0',
         'env': 'dev',
         'width': 70,

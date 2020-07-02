@@ -12,8 +12,13 @@ class PrintOptions:
 
     def handle(self, params=None):
 
+        if len(self.application._options) == 0:
+
+            return
+
         print(s("\nAvailable Options:").yellow())
 
         for option in sorted(self.application._options.items()):
 
-            print(f" {textwrap.fill(option, self.application._config.get('width'))}")
+            print(
+                f" {textwrap.fill(option, self.application._config.get('width'))}")

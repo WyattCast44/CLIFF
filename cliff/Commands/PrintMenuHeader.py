@@ -18,4 +18,5 @@ class PrintMenuHeader:
 
         print(f"\n{s(name).green()} - v{version}")
 
-        print(f"\n{s(desc).color('dark_gray')}")
+        if len(desc) > 0:
+            print(f"\n{s(desc).color('dark_gray')}")

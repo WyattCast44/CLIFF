@@ -15,7 +15,7 @@ class HelpCommand:
     def handle(self, params=None):
         """The help command displays help for a given command"""
 
-        if len(params) == 0:
+        if params == None or len(params) == 0:
             self._subject = "help"
         else:
             self._subject = params[0]
