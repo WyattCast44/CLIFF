@@ -32,6 +32,10 @@ class PrintCommands:
 
             handler = self.commands.get(signature)
 
+            if hasattr(handler, "hidden") and handler.hidden:
+
+                continue
+
             if hasattr(handler, "description"):
 
                 if type(handler.description) == types.FunctionType:

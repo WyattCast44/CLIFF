@@ -104,7 +104,3 @@ class HelpCommand:
         if not hasattr(self._handler, "handle"):
 
             return
-
-        print()
-        print(self._handler.handle.__code__)
-        quit()
