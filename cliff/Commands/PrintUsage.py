@@ -14,7 +14,15 @@ class PrintUsage:
 
         print(s("\nUsage:").yellow())
 
-        message = f"> {self.application._config.get('script')} [option(s)] command [argument(s)]"
+        message = f"> {self.application._config.get('script')}"
+
+        if len(self.application._options.all()) > 0:
+
+            message = message + " [option(s)]"
+
+        if len(self.application._commands.all()) > 0:
+
+            message = message + " command [argument(s)]"
 
         message = textwrap.fill(message, self.application._config.get('width'))
 
