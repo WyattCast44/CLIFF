@@ -30,6 +30,33 @@ class Validate:
             pass
 
 
+class IsStr:
+
+    signature = "str"
+
+    def passes(self, attribute, value):
+
+        try:
+            return str(value)
+        except Exception:
+            pass
+
+    def message(self, attribute, value):
+
+        return f"The {attribute} must be castable to a string"
+
+
+class MaxStr:
+
+    signature = "max:str"
+
+    def passes(self, attribute, value):
+
+    def message(self, attribute, value):
+
+        return f"The {attribute} must be "
+
+
 params = Validate([
     'Arg1',
     '--Arg2'
