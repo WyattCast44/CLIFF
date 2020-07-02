@@ -387,6 +387,13 @@ class Application:
             self._registeredProviders.append(tmp)
 
     def macro(self, name, handler):
+        """Register a macro on the application class
+
+        Args:
+
+            name (str): The name of method to macro onto the class
+            handler (any): The value/method to return when the macro is called
+        """
 
         if name in self._protectedMacroNames:
             raise Exception("Cannot register macro with protected name.",
@@ -395,9 +402,26 @@ class Application:
         setattr(self, name, handler)
 
     def exit(self, code=0) -> None:
+        """Exit the application, optionally pass an exit code
+
+        Args:
+
+            code (int, default=0): The exit code
+
+        Returns:
+
+            None
+        """
 
         sys.exit(code)
 
     def __del__(self):
+        """Cleans up any cruft
 
+        Returns:
+
+            None
+        """
+
+        # Reset output to stout
         sys.stdout = sys.__stdout__
